@@ -9,7 +9,7 @@
 
     <TextView
         android:layout_width="157dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="e-mail:"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
@@ -26,7 +26,7 @@
 
     <TextView
         android:layout_width="221dp"
-        android:layout_height="0dp"
+        android:layout_height="30dp"
         android:text="password"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
@@ -42,5 +42,29 @@
         android:id="@+id/editText2"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="498dp">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Регистрация"
+            android:id="@+id/button"
+            android:layout_weight="0.08"
+            android:clickable="true"
+            android:onClick="startRegisterActivity"
+            android:nestedScrollingEnabled="false" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Вход"
+            android:id="@+id/button2" />
+    </LinearLayout>
 
 </LinearLayout>
