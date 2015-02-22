@@ -46,13 +46,25 @@ public class Db {
     public boolean createUser(String email, String nickname, String password){
         try {
             String sql = "INSERT INTO `user`(`username`, `nickname`, `points`, `password`) VALUES ('"+email+"','"+nickname+"','"+0+"',MD5('"+password+"'))";
-            Log.d("query--------------------",sql);
             PreparedStatement statement = con.prepareStatement(sql);
             statement.execute();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public ResultSet getUser(String email, String password) {
+
+        try {
+            String query = "SELECT * FROM `user` WHERE username = '"+email+"' AND password = MD5('"+password+"');";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

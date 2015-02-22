@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/emailtext"
         android:layout_gravity="center_horizontal" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/passwordtext"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp" />
 
@@ -64,7 +64,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Вход"
-            android:id="@+id/button2" />
+            android:id="@+id/button2"
+            android:clickable="true"
+            android:onClick="logInAction" />
     </LinearLayout>
 
 </LinearLayout>
