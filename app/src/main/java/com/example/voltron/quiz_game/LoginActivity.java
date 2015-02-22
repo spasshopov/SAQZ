@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -59,17 +60,18 @@ public class LoginActivity extends ActionBarActivity {
 
         final String email = etemail.getText().toString();
         final String password = etpassword.getText().toString();
-        final User user = new User();
 
         final Db db = new Db();
-        class login extends AsyncTask<String, Void, Boolean> {
+        class login extends AsyncTask<String, Void, User> {
             @Override
-            protected Boolean doInBackground(String... params) {
+            protected User doInBackground(String... params) {
                 ResultSet result = null;
+                User user = null;
                 if(db.init()){
                     result = db.getUser(email,password);
                     try {
                         while (result.next()) {
+                            user = new User();
                             user.email = result.getString("username");
                             user.id = result.getInt("id");
                             user.nickname = result.getString("nickname");
@@ -77,30 +79,35 @@ public class LoginActivity extends ActionBarActivity {
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
-
-                        return false;
+                        return null;
                     }
                 }
 
-                return true;
+                return user;
             }
 
             @Override
-            protected void onPostExecute(Boolean result) {
+            protected void onPostExecute(User user) {
 
-                if(result){
-                    Toast.makeText(getBaseContext(),
-                            "Logged in", Toast.LENGTH_LONG)
-                            .show();
+                if(user!=null){
+                    if( user.email != null && user.nickname!=null) {
+                        Toast.makeText(getBaseContext(),
+                                "Logged in", Toast.LENGTH_LONG)
+                                .show();
 
-                    Toast.makeText(getBaseContext(),
-                            "User: "+user.nickname+" Points: "+user.points, Toast.LENGTH_LONG)
-                            .show();
+                        Toast.makeText(getBaseContext(),
+                                "Id: " + user.id + " Email: " + user.email + " User: " + user.nickname + " Points: " + user.points, Toast.LENGTH_LONG)
+                                .show();
 
-                    //open some menu activity with options
+                        //open some menu activity with options
+                    }else{
+                        Toast.makeText(getBaseContext(),
+                                "Something Went Wrong!", Toast.LENGTH_LONG)
+                                .show();
+                    }
                 }else {
                     Toast.makeText(getBaseContext(),
-                            "Not logged in", Toast.LENGTH_LONG)
+                            "Wrong username or password!", Toast.LENGTH_LONG)
                             .show();
                 }
 

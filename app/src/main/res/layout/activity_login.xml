@@ -1,20 +1,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LoginActivity"
     android:weightSum="1">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginBottom="15dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/check"
+            android:scaleType="centerInside"
+            android:id="@+id/imageView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="SAQZ"
+            android:id="@+id/textView6"
+            android:textStyle="bold|italic"
+            android:textSize="25sp"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#000000"></LinearLayout>
+
     <TextView
-        android:layout_width="157dp"
+        android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:text="e-mail:"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.08"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="40dp" />
 
     <EditText
         android:layout_width="288dp"
@@ -25,46 +55,47 @@
         android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:layout_width="221dp"
+        android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:text="password"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.10"
         android:layout_marginTop="15dp"
         android:gravity="center_vertical|center_horizontal" />
 
     <EditText
-        android:layout_width="296dp"
+        android:layout_width="288dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/passwordtext"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp" />
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="498dp">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_height="fill_parent"
+        android:gravity="bottom|center_horizontal">
 
         <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            style="?android:attr/button"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Регистрация"
             android:id="@+id/button"
-            android:layout_weight="0.08"
             android:clickable="true"
-            android:onClick="startRegisterActivity"
-            android:nestedScrollingEnabled="false" />
+            android:layout_marginRight="5dp"
+            android:onClick="startRegisterActivity"/>
 
         <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            style="?android:attr/button"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Вход"
             android:id="@+id/button2"
+            android:layout_marginLeft="5dp"
             android:clickable="true"
             android:onClick="logInAction" />
     </LinearLayout>
