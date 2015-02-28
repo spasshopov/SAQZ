@@ -3,8 +3,11 @@ package com.example.voltron.quiz_game;
 /**
  * Created by Voltron on 14.2.2015 г..
  */
+import android.content.res.Resources;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.mysql.jdbc.Statement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,14 +21,17 @@ public class Db {
 
     public Connection connect() {
         Connection conn = null;
-        String url = "jdbc:mysql://127.0.0.1:3306/";
+        String url = "jdbc:mysql://10.0.2.2:3306/";
+//        String url = "jdbc:mysql://87.97.216.220:65415/";
         String dbName = "quiz_db";
         String driver = "com.mysql.jdbc.Driver";
         String userName = "root";
         String password = "";
+//        String userName = "project";
+//        String password = "SAQZpass";
         try {
             Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/" + dbName, userName, password);
+            conn = DriverManager.getConnection(url + dbName, userName, password);
             return conn;
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,6 +71,39 @@ public class Db {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public int createQuestion(String questionText, int userId) throws Exception{
+        try {
+            String sql = "INSERT INTO `questions`(`question`, `user_id`) VALUES ('"+questionText+"','"+userId+"')";
+            PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate();
+            ResultSet result;
+            result = statement.getGeneratedKeys();
+
+            if(result.next() && result != null){
+                return result.getInt(1);
+            } else {
+                throw new Exception("not inserted");
+            }
+
+//            statement.execute();
+
+        } catch (SQLException e) {
+            throw new Exception("not inserted");
+        }
+    }
+
+    public boolean createAnswer(String answerText, int questionId, boolean correct, int index){
+        try {
+            String sql = "INSERT INTO `answers`(`question_id`, `correct`, `answer`, `index`) VALUES ('"+questionId+"',"+correct+",'"+answerText+"','"+index+"')";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

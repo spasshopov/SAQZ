@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.voltron.quiz_game.RegisterActivity">
@@ -12,61 +11,105 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="email"
-            android:id="@+id/textView3" />
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/emailtext"
-            android:gravity="center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginBottom="15dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="nickname"
-            android:id="@+id/textView4" />
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/check"
+                android:scaleType="centerInside"
+                android:id="@+id/imageView" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nicknametext" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="password"
-            android:id="@+id/textView5" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/passwordtext" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="SAQZ"
+                android:id="@+id/textView6"
+                android:textStyle="bold|italic"
+                android:textSize="25sp"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="bottom">
+            android:layout_height="1dp"
+            android:background="#000000"></LinearLayout>
 
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:paddingRight="16dp"
+                android:layout_marginTop="40dp"
+                android:paddingLeft="16dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="email"
+                android:id="@+id/textView3"
+                android:gravity="center" />
+
+            <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
-                android:id="@+id/registerbutton"
-                android:onClick="registerUser"
-                android:nestedScrollingEnabled="false" />
-        </LinearLayout>
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/emailtext"
+                android:gravity="center_horizontal" />
 
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="nickname"
+                android:id="@+id/textView4"
+                android:gravity="center" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nicknametext" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="password"
+                android:id="@+id/textView5"
+                android:gravity="center" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/passwordtext" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="bottom">
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Register"
+                    android:id="@+id/registerbutton"
+                    android:onClick="registerUser"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

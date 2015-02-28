@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Quiz_game</string>
+    <string name="app_name">SAQZ</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_options">OptionsActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
 
 </resources>

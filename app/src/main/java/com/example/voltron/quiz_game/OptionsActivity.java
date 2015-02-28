@@ -1,15 +1,18 @@
 package com.example.voltron.quiz_game;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 public class OptionsActivity extends ActionBarActivity {
 
     private User user = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +26,6 @@ public class OptionsActivity extends ActionBarActivity {
                     .show();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,10 +50,21 @@ public class OptionsActivity extends ActionBarActivity {
     }
 
     public void startCreateActivity(View v) {
-        //ToDo: open create questions activity
+        Intent intent = new Intent(this, CreateActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     public void startAnswerActivity(View v) {
         //ToDo: open answer questions activity
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
     }
 }

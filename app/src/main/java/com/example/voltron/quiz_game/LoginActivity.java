@@ -54,6 +54,7 @@ public class LoginActivity extends ActionBarActivity {
     public void startOptionsActivity(User user) {
         Intent intent = new Intent(this, OptionsActivity.class);
         Bundle bundle = new Bundle();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         bundle.putSerializable("user", user);
         intent.putExtras(bundle);
         startActivity(intent);
