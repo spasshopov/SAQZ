@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -50,6 +48,14 @@ public class LoginActivity extends ActionBarActivity {
 
     public void startRegisterActivity(View v){
         Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void startOptionsActivity(User user) {
+        Intent intent = new Intent(this, OptionsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -91,15 +97,7 @@ public class LoginActivity extends ActionBarActivity {
 
                 if(user!=null){
                     if( user.email != null && user.nickname!=null) {
-                        Toast.makeText(getBaseContext(),
-                                "Logged in", Toast.LENGTH_LONG)
-                                .show();
-
-                        Toast.makeText(getBaseContext(),
-                                "Id: " + user.id + " Email: " + user.email + " User: " + user.nickname + " Points: " + user.points, Toast.LENGTH_LONG)
-                                .show();
-
-                        //open some menu activity with options
+                        LoginActivity.this.startOptionsActivity(user);
                     }else{
                         Toast.makeText(getBaseContext(),
                                 "Something Went Wrong!", Toast.LENGTH_LONG)
