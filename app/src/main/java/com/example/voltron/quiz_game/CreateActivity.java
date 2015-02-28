@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-
+//TODO Validation for the fields
 public class CreateActivity extends ActionBarActivity {
 
     private User user = null;
