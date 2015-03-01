@@ -31,6 +31,10 @@
             android:name=".CreateActivity"
             android:label="@string/title_activity_create" >
         </activity>
+        <activity
+            android:name=".AnswerActivity"
+            android:label="@string/title_activity_answer" >
+        </activity>
     </application>
 
 </manifest>

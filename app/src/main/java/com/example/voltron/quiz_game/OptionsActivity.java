@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 public class OptionsActivity extends ActionBarActivity {
@@ -58,7 +57,11 @@ public class OptionsActivity extends ActionBarActivity {
     }
 
     public void startAnswerActivity(View v) {
-        //ToDo: open answer questions activity
+        Intent intent = new Intent(this, AnswerActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override
