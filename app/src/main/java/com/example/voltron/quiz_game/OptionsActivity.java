@@ -70,4 +70,12 @@ public class OptionsActivity extends ActionBarActivity {
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
     }
+
+    public void startUserChartActivity(View v) {
+        Intent intent = new Intent(this, UserChartActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }
