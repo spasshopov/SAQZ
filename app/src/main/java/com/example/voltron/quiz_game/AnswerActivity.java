@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -183,34 +184,40 @@ public class AnswerActivity extends ActionBarActivity {
                 boolean result = true;
                 if(db.init()){
                     try {
+                        Log.d("----------",question.correctAnswer+"");
                         if (question.correctAnswer == 0 && a.isChecked()) {
-                            user.points++;
+                            Log.d("a","---------------");
+                            user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
 
                         if (question.correctAnswer == 1 && b.isChecked()) {
-                            user.points++;
+                            Log.d("b","---------------");
+                            user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
 
                         if (question.correctAnswer == 2 && c.isChecked()) {
-                            user.points++;
+                            Log.d("c","---------------");
+                            user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
 
                         if (question.correctAnswer == 3 && d.isChecked()) {
-                            user.points++;
+                            Log.d("d","---------------");
+                            user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
-
+                        Log.d("error","---------------");
                         db.falseAnswerUpdate(user, question);
                         return false;
 
                     }catch (Exception e){
+                        e.printStackTrace();
                         result = false;
                     }
                 }
@@ -243,6 +250,9 @@ public class AnswerActivity extends ActionBarActivity {
     private void restartMe()
     {
         Intent intent = getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
         finish();
         startActivity(intent);
     }
