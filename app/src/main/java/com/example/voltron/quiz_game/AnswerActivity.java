@@ -184,35 +184,29 @@ public class AnswerActivity extends ActionBarActivity {
                 boolean result = true;
                 if(db.init()){
                     try {
-                        Log.d("----------",question.correctAnswer+"");
                         if (question.correctAnswer == 0 && a.isChecked()) {
-                            Log.d("a","---------------");
                             user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
 
                         if (question.correctAnswer == 1 && b.isChecked()) {
-                            Log.d("b","---------------");
                             user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
 
                         if (question.correctAnswer == 2 && c.isChecked()) {
-                            Log.d("c","---------------");
                             user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
 
                         if (question.correctAnswer == 3 && d.isChecked()) {
-                            Log.d("d","---------------");
                             user.points = user.points+1;
                             db.correctAnswerUpdate(user, question);
                             return true;
                         }
-                        Log.d("error","---------------");
                         db.falseAnswerUpdate(user, question);
                         return false;
 
