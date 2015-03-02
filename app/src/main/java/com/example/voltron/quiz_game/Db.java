@@ -21,6 +21,7 @@ public class Db {
 
     public Connection connect() {
         Connection conn = null;
+        String encoding = "?useUnicode=true&characterEncoding=UTF-8";
         String url = "jdbc:mysql://10.0.2.2:3306/";
 //        String url = "jdbc:mysql://87.97.216.220:65415/";
         String dbName = "quiz_db";
@@ -31,7 +32,7 @@ public class Db {
 //        String password = "SAQZpass";
         try {
             Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection(url + dbName, userName, password);
+            conn = DriverManager.getConnection(url + dbName + encoding, userName, password);
             return conn;
         } catch (Exception e) {
             e.printStackTrace();
