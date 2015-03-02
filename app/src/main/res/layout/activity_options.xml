@@ -38,7 +38,7 @@
         android:background="#000000"></LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -53,7 +53,6 @@
             android:text="Задавай!"
             android:id="@+id/button"
             android:clickable="true"
-            android:layout_marginRight="5dp"
             android:onClick="startCreateActivity"/>
 
         <Button
@@ -62,9 +61,17 @@
             android:layout_height="wrap_content"
             android:text="Отговаряй"
             android:id="@+id/button2"
-            android:layout_marginLeft="5dp"
             android:clickable="true"
             android:onClick="startAnswerActivity" />
+
+        <Button
+            style="?android:attr/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Класация"
+            android:id="@+id/button3"
+            android:clickable="true"
+            android:onClick="startUserChartActivity" />
     </LinearLayout>
 
 </LinearLayout>

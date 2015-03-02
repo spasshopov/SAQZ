@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Vurpos"
+                        android:text="...loading"
                         android:id="@+id/questionText" />
 
                     <LinearLayout
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="A: bla bla"
+                        android:text="...loading"
                         android:id="@+id/answer_row_a" />
 
                     <LinearLayout
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="B: bla bla"
+                        android:text="...loading"
                         android:id="@+id/answer_row_b" />
 
                     <LinearLayout
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="C: bla bla"
+                        android:text="...loading"
                         android:id="@+id/answer_row_c" />
 
                     <LinearLayout
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="D: bla bla"
+                        android:text="...loading"
                         android:id="@+id/answer_row_d" />
 
                     <LinearLayout

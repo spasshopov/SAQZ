@@ -35,6 +35,10 @@
             android:name=".AnswerActivity"
             android:label="@string/title_activity_answer" >
         </activity>
+        <activity
+            android:name=".UserChartActivity"
+            android:label="@string/title_activity_user_chart" >
+        </activity>
     </application>
 
 </manifest>

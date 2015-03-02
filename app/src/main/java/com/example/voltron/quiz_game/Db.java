@@ -3,17 +3,16 @@ package com.example.voltron.quiz_game;
 /**
  * Created by Voltron on 14.2.2015 г..
  */
-import android.content.res.Resources;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.mysql.jdbc.Statement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 public class Db {
 
@@ -105,6 +104,90 @@ public class Db {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public Question getQuestionForUser(User user) {
+        try {
+            String query = "SELECT * \n" +
+                    "FROM questions, answers\n" +
+                    "WHERE questions.id = answers.question_id\n" +
+                    "AND questions.user_id != "+user.id+"\n" +
+                    "AND questions.id NOT IN (SELECT user_answered.question_id FROM user_answered WHERE user_answered.user_id = "+user.id+")\n" +
+                    "LIMIT 4;";
+
+            PreparedStatement statement = con.prepareStatement(query);
+
+            ResultSet result = statement.executeQuery();
+            Question question = new Question();
+
+            while(result.next()) {
+                question.question = result.getString("question");
+                question.answer[result.getInt("index")] = result.getString("answer");
+                question.id = result.getInt("question_id");
+                if (result.getInt("correct") == 1) {
+                    question.correctAnswer = result.getInt("index");
+                }
+            }
+
+            if(question.question == null) {
+                return null;
+            }
+
+            return  question;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void correctAnswerUpdate(User user, Question question) {
+        try {
+            String sql = "UPDATE `user` SET points = "+user.points+" WHERE id = "+user.id+";";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.execute();
+
+            sql = "INSERT INTO `user_answered`(`question_id`, `user_id`) VALUES ("+question.id+","+user.id+")";
+            statement = con.prepareStatement(sql);
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void falseAnswerUpdate(User user, Question question) {
+        try {
+            String sql = "INSERT INTO `user_answered`(`question_id`, `user_id`) VALUES ("+question.id+","+user.id+")";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<User> getAllUsers(){
+        ArrayList<User> users = new ArrayList<User>();
+        try {
+            String query = "SELECT * FROM `user` ORDER BY points DESC";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                User user = new User();
+                user.id = result.getInt("id");
+                user.points = result.getInt("points");
+                user.nickname = result.getString("nickname");
+                user.email = result.getString("username");
+                users.add(user);
+            }
+
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
