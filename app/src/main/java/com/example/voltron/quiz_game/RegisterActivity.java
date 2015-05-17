@@ -1,13 +1,12 @@
 package com.example.voltron.quiz_game;
 
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -46,11 +45,19 @@ public class RegisterActivity extends ActionBarActivity {
         EditText etemail = (EditText) findViewById(R.id.emailtext);
         EditText etnickname = (EditText) findViewById(R.id.nicknametext);
         EditText etpassword = (EditText) findViewById(R.id.passwordtext);
+        EditText etpasswordConfirm = (EditText) findViewById(R.id.passwordconfirm );
 
         final String email = etemail.getText().toString();
         final String nickname = etnickname.getText().toString();
         final String password = etpassword.getText().toString();
+        final String passwordConfirm = etpasswordConfirm.getText().toString();
 
+        if (!password.equals(passwordConfirm)) {
+            Toast.makeText(getBaseContext(),
+                    "Password doesn't match!", Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
 
         final Db db = new Db();
         class register extends AsyncTask<String, Void, Boolean> {
@@ -89,7 +96,6 @@ public class RegisterActivity extends ActionBarActivity {
         }
 
         new register().execute("");
-
     }
 
 

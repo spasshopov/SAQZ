@@ -96,6 +96,21 @@
                 android:ems="10"
                 android:id="@+id/passwordtext" />
 
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="password confirm"
+                android:id="@+id/passwordconfirmtext"
+                android:gravity="center" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/passwordconfirm" />
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
