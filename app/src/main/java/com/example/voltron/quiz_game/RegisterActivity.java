@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Patterns;
 
 
 public class RegisterActivity extends ActionBarActivity {
@@ -55,6 +56,13 @@ public class RegisterActivity extends ActionBarActivity {
         if (!password.equals(passwordConfirm)) {
             Toast.makeText(getBaseContext(),
                     "Password doesn't match!", Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(getBaseContext(),
+                    "Enter valid email address!", Toast.LENGTH_LONG)
                     .show();
             return;
         }
