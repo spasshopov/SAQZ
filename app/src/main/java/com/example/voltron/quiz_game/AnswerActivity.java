@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -219,6 +218,7 @@ public class AnswerActivity extends ActionBarActivity {
                 return result;
             }
 
+
             @Override
             protected void onPostExecute(Boolean result) {
                 if(!result) {
@@ -239,6 +239,49 @@ public class AnswerActivity extends ActionBarActivity {
         }
 
         new AnswerQuestion().execute();
+    }
+
+    public void reportQuestion(View v) {
+        class ReportQuestion extends AsyncTask<Void, Void, Boolean> {
+
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                final Db db = new Db();
+                boolean result = true;
+                if(db.init()){
+                    try {
+                        question.reports++;
+                        db.falseAnswerUpdate(user, question);
+                        db.reportQuestion(question);
+                        return true;
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        result = false;
+                    }
+                }
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if(result) {
+                    Toast.makeText(getBaseContext(),
+                            "Question reported!", Toast.LENGTH_LONG)
+                            .show();
+                }
+                restartMe();
+            }
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+            }
+        }
+
+        new ReportQuestion().execute();
     }
 
     private void restartMe()

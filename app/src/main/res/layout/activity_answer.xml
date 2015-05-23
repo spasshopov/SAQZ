@@ -199,6 +199,18 @@
                             android:onClick="answerQuestion"
                             android:layout_marginTop="20dp" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+                        <Button
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Некоректен въпрос!"
+                            android:id="@+id/answer_report"
+                            android:onClick="reportQuestion"
+                            android:layout_marginTop="20dp" />
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

@@ -125,6 +125,7 @@ public class Db {
                 question.question = result.getString("question");
                 question.answer[result.getInt("index")] = result.getString("answer");
                 question.id = result.getInt("question_id");
+                question.reports = result.getInt("reports");
                 if (result.getInt("correct") == 1) {
                     question.correctAnswer = result.getInt("index");
                 }
@@ -160,6 +161,21 @@ public class Db {
     public void falseAnswerUpdate(User user, Question question) {
         try {
             String sql = "INSERT INTO `user_answered`(`question_id`, `user_id`) VALUES ("+question.id+","+user.id+")";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reportQuestion(Question question) {
+        try {
+            String sql = ";";
+            if(question.reports <  5) {
+                sql = "UPDATE `questions` SET reports = " + question.reports + " WHERE id = " + question.id + ";";
+            } else {
+                sql = "DELETE FROM `questions` WHERE id = "+question.id+";";
+            }
             PreparedStatement statement = con.prepareStatement(sql);
             statement.execute();
         } catch (SQLException e) {

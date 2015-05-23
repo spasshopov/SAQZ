@@ -1,5 +1,6 @@
 package com.example.voltron.quiz_game;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +20,12 @@ public class RegisterActivity extends ActionBarActivity {
         setContentView(R.layout.activity_register);
     }
 
+    public void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        Bundle bundle = new Bundle();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,6 +93,7 @@ public class RegisterActivity extends ActionBarActivity {
                     Toast.makeText(getBaseContext(),
                             "User created", Toast.LENGTH_LONG)
                             .show();
+                    RegisterActivity.this.startLoginActivity();
                 }else {
                     Toast.makeText(getBaseContext(),
                             "User NOT created", Toast.LENGTH_LONG)
@@ -105,6 +113,4 @@ public class RegisterActivity extends ActionBarActivity {
 
         new register().execute("");
     }
-
-
 }
