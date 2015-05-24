@@ -3,6 +3,7 @@ package com.example.voltron.quiz_game;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -88,47 +89,49 @@ public class OptionsActivity extends ActionBarActivity {
 
     public void prepareForOffline(View v) {
         final Db db = new Db();
-        class prepareOfflineQuestions extends AsyncTask<String, Void, Boolean> {
+        class prepareOfflineQuestions extends AsyncTask<String, Void, String> {
             @Override
-            protected Boolean doInBackground(String... params) {
+            protected String doInBackground(String... params) {
                 Question question = null;
                 User user = null;
                 if(db.init()){
                     for (int i=0; i<2; i++) {
                         question = db.getQuestionForUser(OptionsActivity.this.user);
+                        if (question == null && i==0) {
+                            return "No more questions available!";
+                        } else if(question == null) {
+                            return "All questions cached!";
+                        }
                         db.correctAnswerUpdate(OptionsActivity.this.user, question);
                         try {
-                            File file = new File(getCacheDir() + "/SAQZ/"+OptionsActivity.this.user.email+"/"+question.id+"/"+question.id+".qsn");
-                            file.createNewFile();
-                            Log.println(1, "Path", "Path: " + file.getAbsolutePath());
-                            FileOutputStream fileOut = new FileOutputStream(file);
-                            ObjectOutputStream questionStream = new ObjectOutputStream(fileOut);
-                            questionStream.writeObject(question);
-                            questionStream.close();
-                            fileOut.close();
+                            File folder = new File(Environment.getExternalStorageDirectory() + "/SAQZ/"+OptionsActivity.this.user.email+"/"+question.id);
+                            if (folder.mkdirs() ) {
+                                File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + OptionsActivity.this.user.email + "/" + question.id + "/" + question.id + ".qsn");
+                                file.createNewFile();
+                                FileOutputStream fileOut = new FileOutputStream(file);
+                                ObjectOutputStream questionStream = new ObjectOutputStream(fileOut);
+                                questionStream.writeObject(question);
+                                questionStream.close();
+                                fileOut.close();
+                            } else {
+                                Log.d("Path", "Path: No path created");
+                                return "Can't create cache, device incompatibility!";
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
-                            return false;
+                            return "Can't create cache, device incompatibility!";
                         }
                     }
                 }
 
-                return true;
+                return "Ready to play offline, when no connection is available!";
             }
 
             @Override
-            protected void onPostExecute(Boolean success) {
-
-                if(success){
-                    Toast.makeText(getBaseContext(),
-                            "Questions saved for offline gaming!", Toast.LENGTH_LONG)
-                            .show();
-                }else {
-                    Toast.makeText(getBaseContext(),
-                            "You can't play offline, device incompatibility!", Toast.LENGTH_LONG)
-                            .show();
-                }
-
+            protected void onPostExecute(String status) {
+                Toast.makeText(getBaseContext(),
+                        status, Toast.LENGTH_LONG)
+                        .show();
             }
 
             @Override

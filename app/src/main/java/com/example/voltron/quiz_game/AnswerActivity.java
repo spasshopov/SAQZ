@@ -3,6 +3,7 @@ package com.example.voltron.quiz_game;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,13 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 
 public class AnswerActivity extends ActionBarActivity {
@@ -57,8 +65,23 @@ public class AnswerActivity extends ActionBarActivity {
                 @Override
                 protected Boolean doInBackground(Void... params) {
                     final Db db = new Db();
-                    boolean result = true;
-                    if(db.init()){
+                    boolean result = false;
+                    if (db.init()) {
+                        try {
+                            File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
+                            FileInputStream fileIn = new FileInputStream(file);
+                            ObjectInputStream in = new ObjectInputStream(fileIn);
+                            User updateUser = (User) in.readObject();
+                            db.updateUserPoints(updateUser);
+                            file.delete();
+                            in.close();
+                            fileIn.close();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        } catch (ClassNotFoundException c) {
+                            c.printStackTrace();
+                        }
+
                         try {
                             question = db.getQuestionForUser(user);
                             if(question == null){
@@ -69,6 +92,32 @@ public class AnswerActivity extends ActionBarActivity {
                             Toast.makeText(getBaseContext(),
                                     "Failure!", Toast.LENGTH_LONG)
                                     .show();
+                        }
+                    } else {
+                        File folder = new File(Environment.getExternalStorageDirectory() + "/SAQZ/"+AnswerActivity.this.user.email);
+                        File[] files = folder.listFiles();
+
+                        for (int i = 0; i < files.length; i++) {
+                            if (files[i].isDirectory()) {
+                                try {
+                                    File questionFile = new File(files[i].getAbsolutePath()+"/"+files[i].getName()+".qsn");
+                                    FileInputStream fileIn = new FileInputStream(questionFile);
+                                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                                    question = (Question) in.readObject();
+                                    questionFile.delete();
+                                    files[i].delete();
+                                    in.close();
+                                    fileIn.close();
+                                    result = true;
+                                    break;
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                    return null;
+                                } catch (ClassNotFoundException c) {
+                                    c.printStackTrace();
+                                    return null;
+                                }
+                            }
                         }
                     }
 
@@ -180,7 +229,7 @@ public class AnswerActivity extends ActionBarActivity {
             @Override
             protected Boolean doInBackground(Void... params) {
                 final Db db = new Db();
-                boolean result = true;
+                boolean result = false;
                 if(db.init()){
                     try {
                         if (question.correctAnswer == 0 && a.isChecked()) {
@@ -213,11 +262,42 @@ public class AnswerActivity extends ActionBarActivity {
                         e.printStackTrace();
                         result = false;
                     }
+                } else {
+                    if (question.correctAnswer == 0 && a.isChecked()) {
+                        user.points = user.points+1;
+                        result = true;
+                    }
+
+                    if (question.correctAnswer == 1 && b.isChecked()) {
+                        user.points = user.points+1;
+                        result = true;
+                    }
+
+                    if (question.correctAnswer == 2 && c.isChecked()) {
+                        user.points = user.points+1;
+                        result = true;
+                    }
+
+                    if (question.correctAnswer == 3 && d.isChecked()) {
+                        user.points = user.points+1;;
+                        result = true;
+                    }
+                    try {
+                        File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
+                        file.createNewFile();
+                        FileOutputStream fileOut = new FileOutputStream(file);
+                        ObjectOutputStream userStream = new ObjectOutputStream(fileOut);
+                        userStream.writeObject(user);
+                        userStream.close();
+                        fileOut.close();
+                    } catch (IOException er) {
+                            er.printStackTrace();
+                            return false;
+                    }
                 }
 
                 return result;
             }
-
 
             @Override
             protected void onPostExecute(Boolean result) {

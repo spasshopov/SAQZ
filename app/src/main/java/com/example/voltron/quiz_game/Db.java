@@ -158,6 +158,16 @@ public class Db {
         }
     }
 
+    public void updateUserPoints(User user) {
+        try {
+            String sql = "UPDATE `user` SET points = "+user.points+" WHERE id = "+user.id+";";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void falseAnswerUpdate(User user, Question question) {
         try {
             String sql = "INSERT INTO `user_answered`(`question_id`, `user_id`) VALUES ("+question.id+","+user.id+")";
