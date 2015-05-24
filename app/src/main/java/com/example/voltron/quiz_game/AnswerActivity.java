@@ -69,13 +69,15 @@ public class AnswerActivity extends ActionBarActivity {
                     if (db.init()) {
                         try {
                             File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
-                            FileInputStream fileIn = new FileInputStream(file);
-                            ObjectInputStream in = new ObjectInputStream(fileIn);
-                            User updateUser = (User) in.readObject();
-                            db.updateUserPoints(updateUser);
-                            file.delete();
-                            in.close();
-                            fileIn.close();
+                            if (file.isFile()) {
+                                FileInputStream fileIn = new FileInputStream(file);
+                                ObjectInputStream in = new ObjectInputStream(fileIn);
+                                User updateUser = (User) in.readObject();
+                                db.updateUserPoints(updateUser);
+                                file.delete();
+                                in.close();
+                                fileIn.close();
+                            }
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         } catch (ClassNotFoundException c) {
@@ -86,6 +88,8 @@ public class AnswerActivity extends ActionBarActivity {
                             question = db.getQuestionForUser(user);
                             if(question == null){
                                 result = false;
+                            } else {
+                                result = true;
                             }
                         }catch (Exception e){
                             result = false;
