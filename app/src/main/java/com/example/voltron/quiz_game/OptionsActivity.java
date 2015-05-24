@@ -1,12 +1,19 @@
 package com.example.voltron.quiz_game;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class OptionsActivity extends ActionBarActivity {
 
@@ -77,5 +84,62 @@ public class OptionsActivity extends ActionBarActivity {
         bundle.putSerializable("user", user);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    public void prepareForOffline(View v) {
+        final Db db = new Db();
+        class prepareOfflineQuestions extends AsyncTask<String, Void, Boolean> {
+            @Override
+            protected Boolean doInBackground(String... params) {
+                Question question = null;
+                User user = null;
+                if(db.init()){
+                    for (int i=0; i<2; i++) {
+                        question = db.getQuestionForUser(OptionsActivity.this.user);
+                        db.correctAnswerUpdate(OptionsActivity.this.user, question);
+                        try {
+                            File file = new File(getCacheDir() + "/SAQZ/"+OptionsActivity.this.user.email+"/"+question.id+"/"+question.id+".qsn");
+                            file.createNewFile();
+                            Log.println(1, "Path", "Path: " + file.getAbsolutePath());
+                            FileOutputStream fileOut = new FileOutputStream(file);
+                            ObjectOutputStream questionStream = new ObjectOutputStream(fileOut);
+                            questionStream.writeObject(question);
+                            questionStream.close();
+                            fileOut.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean success) {
+
+                if(success){
+                    Toast.makeText(getBaseContext(),
+                            "Questions saved for offline gaming!", Toast.LENGTH_LONG)
+                            .show();
+                }else {
+                    Toast.makeText(getBaseContext(),
+                            "You can't play offline, device incompatibility!", Toast.LENGTH_LONG)
+                            .show();
+                }
+
+            }
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+            }
+        }
+
+        new prepareOfflineQuestions().execute("");
     }
 }

@@ -72,6 +72,15 @@
             android:id="@+id/button3"
             android:clickable="true"
             android:onClick="startUserChartActivity" />
+
+        <Button
+            style="?android:attr/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Приготви за offline игра"
+            android:id="@+id/button4"
+            android:clickable="true"
+            android:onClick="prepareForOffline" />
     </LinearLayout>
 
 </LinearLayout>
