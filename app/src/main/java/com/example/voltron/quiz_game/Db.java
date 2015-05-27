@@ -32,7 +32,7 @@ public class Db {
         try {
             Class.forName(driver).newInstance();
             Log.d("Connection: ", "Before");
-            conn = DriverManager.getConnection(url + dbName + encoding, userName, password);
+            conn = DriverManager.getConnection(url + dbName + encoding, userName, password); //This sucks
             Log.d("Connection: ", "After");
 
             return conn;
