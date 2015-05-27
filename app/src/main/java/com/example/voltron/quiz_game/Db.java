@@ -32,7 +32,8 @@ public class Db {
         try {
             Class.forName(driver).newInstance();
             Log.d("Connection: ", "Before");
-            conn = DriverManager.getConnection(url + dbName + encoding, userName, password);
+            conn = ConnectionWithTimeout.getConnection(url + dbName + encoding, userName, password,driver,3);
+            //conn = DriverManager.getConnection(url + dbName + encoding, userName, password);
             Log.d("Connection: ", "After");
 
             return conn;
