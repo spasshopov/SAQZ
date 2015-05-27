@@ -31,11 +31,18 @@ public class Db {
 //        String password = "SAQZpass";
         try {
             Class.forName(driver).newInstance();
+            Log.d("Connection: ", "Before");
             conn = DriverManager.getConnection(url + dbName + encoding, userName, password);
+            Log.d("Connection: ", "After");
+
             return conn;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            Log.d("Exception:",e.getMessage());
+            Log.d("Exception mysql:",e.getMessage());
+            return null;
+        } catch (Exception ee) {
+            ee.printStackTrace();
+            Log.d("Exception:",ee.getMessage());
             return null;
         }
     }
@@ -43,8 +50,10 @@ public class Db {
     public boolean init(){
         this.con = connect();
         if (con == null) {
+            Log.d("Connection: ", "NO!");
             return false;
         }else {
+            Log.d("Connection: ", "YES!");
             return true;
         }
     }

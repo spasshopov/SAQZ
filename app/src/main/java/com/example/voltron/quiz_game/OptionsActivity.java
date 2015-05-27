@@ -122,6 +122,8 @@ public class OptionsActivity extends ActionBarActivity {
                             return "Can't create cache, device incompatibility!";
                         }
                     }
+                } else {
+                    return "Can't cache now no connection available!";
                 }
 
                 return "Ready to play offline, when no connection is available!";

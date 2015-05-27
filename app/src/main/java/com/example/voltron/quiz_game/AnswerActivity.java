@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,9 +68,12 @@ public class AnswerActivity extends ActionBarActivity {
                     final Db db = new Db();
                     boolean result = false;
                     if (db.init()) {
+                        Log.d("Answer: ", "Getting cached");
                         try {
+                            Log.d("User: ", "Try to update");
                             File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
                             if (file.isFile()) {
+                                Log.d("User file:", file.getName());
                                 FileInputStream fileIn = new FileInputStream(file);
                                 ObjectInputStream in = new ObjectInputStream(fileIn);
                                 User updateUser = (User) in.readObject();
@@ -98,6 +102,7 @@ public class AnswerActivity extends ActionBarActivity {
                                     .show();
                         }
                     } else {
+                        Log.d("Answer: ", "Getting cached");
                         File folder = new File(Environment.getExternalStorageDirectory() + "/SAQZ/"+AnswerActivity.this.user.email);
                         File[] files = folder.listFiles();
 
@@ -267,6 +272,7 @@ public class AnswerActivity extends ActionBarActivity {
                         result = false;
                     }
                 } else {
+                    Log.d("Offline answering", "Answer offline");
                     if (question.correctAnswer == 0 && a.isChecked()) {
                         user.points = user.points+1;
                         result = true;
@@ -288,7 +294,9 @@ public class AnswerActivity extends ActionBarActivity {
                     }
                     try {
                         File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
-                        file.createNewFile();
+                        if(!file.createNewFile()) {
+                            Log.d("User file", "Not created");
+                        }
                         FileOutputStream fileOut = new FileOutputStream(file);
                         ObjectOutputStream userStream = new ObjectOutputStream(fileOut);
                         userStream.writeObject(user);
