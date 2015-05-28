@@ -68,7 +68,7 @@ public class AnswerActivity extends ActionBarActivity {
                     final Db db = new Db();
                     boolean result = false;
                     if (db.init()) {
-                        Log.d("Answer: ", "Getting cached");
+                        Log.d("Answer: ", "Getting from db");
                         try {
                             Log.d("User: ", "Try to update");
                             File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
@@ -84,14 +84,45 @@ public class AnswerActivity extends ActionBarActivity {
                             }
                         } catch (IOException ex) {
                             ex.printStackTrace();
+                            Log.d("Answer init: ", "IOE Exception");
+
                         } catch (ClassNotFoundException c) {
                             c.printStackTrace();
+                            Log.d("Answer init: ", "Class not found Exception");
+
+                        } catch (Exception sqlEx) {
+                            Log.d("Answer init: ", "Exception");
                         }
 
                         try {
                             question = db.getQuestionForUser(user);
                             if(question == null){
-                                result = false;
+                                Log.d("Answer: ", "Getting cached");
+                                File folder = new File(Environment.getExternalStorageDirectory() + "/SAQZ/"+AnswerActivity.this.user.email);
+                                File[] files = folder.listFiles();
+
+                                for (int i = 0; i < files.length; i++) {
+                                    if (files[i].isDirectory()) {
+                                        try {
+                                            File questionFile = new File(files[i].getAbsolutePath()+"/"+files[i].getName()+".qsn");
+                                            FileInputStream fileIn = new FileInputStream(questionFile);
+                                            ObjectInputStream in = new ObjectInputStream(fileIn);
+                                            question = (Question) in.readObject();
+                                            questionFile.delete();
+                                            files[i].delete();
+                                            in.close();
+                                            fileIn.close();
+                                            result = true;
+                                            break;
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
+                                            return null;
+                                        } catch (ClassNotFoundException c) {
+                                            c.printStackTrace();
+                                            return null;
+                                        }
+                                    }
+                                }
                             } else {
                                 result = true;
                             }

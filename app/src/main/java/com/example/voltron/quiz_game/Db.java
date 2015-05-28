@@ -8,7 +8,6 @@ import android.util.Log;
 import com.mysql.jdbc.Statement;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +31,7 @@ public class Db {
         try {
             Class.forName(driver).newInstance();
             Log.d("Connection: ", "Before");
-            conn = ConnectionWithTimeout.getConnection(url + dbName + encoding, userName, password,driver,3);
+            conn = ConnectionWithTimeout.getConnection(url + dbName + encoding, userName, password,driver,2);
             //conn = DriverManager.getConnection(url + dbName + encoding, userName, password);
             Log.d("Connection: ", "After");
 
@@ -55,6 +54,11 @@ public class Db {
             return false;
         }else {
             Log.d("Connection: ", "YES!");
+            try {
+                con.getAutoCommit();
+            } catch (SQLException sqlE) {
+                return false;
+            }
             return true;
         }
     }
