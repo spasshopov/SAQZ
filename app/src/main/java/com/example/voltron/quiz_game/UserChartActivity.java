@@ -2,12 +2,17 @@ package com.example.voltron.quiz_game;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 
@@ -36,6 +41,21 @@ public class UserChartActivity extends ActionBarActivity {
             @Override
             protected ArrayList<User> doInBackground(Void... params) {
                 if(db.init()){
+                    try {
+                        File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + UserChartActivity.this.user.email + ".usr");
+                        if (file.isFile()) {
+                            Log.d("User file:", file.getName());
+                            FileInputStream fileIn = new FileInputStream(file);
+                            ObjectInputStream in = new ObjectInputStream(fileIn);
+                            User updateUser = (User) in.readObject();
+                            db.updateUserPoints(updateUser);
+                            file.delete();
+                            in.close();
+                            fileIn.close();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return db.getAllUsers();
                 }
                 return  null;

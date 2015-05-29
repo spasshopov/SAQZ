@@ -271,34 +271,64 @@ public class AnswerActivity extends ActionBarActivity {
                 final Db db = new Db();
                 boolean result = false;
                 if(db.init()){
+                    Log.d("Online answering", "Answer online");
+                    boolean correct = false;
                     try {
                         if (question.correctAnswer == 0 && a.isChecked()) {
                             user.points = user.points+1;
-                            db.correctAnswerUpdate(user, question);
-                            return true;
+                            correct = true;
                         }
 
                         if (question.correctAnswer == 1 && b.isChecked()) {
                             user.points = user.points+1;
-                            db.correctAnswerUpdate(user, question);
-                            return true;
+                            correct = true;
                         }
 
                         if (question.correctAnswer == 2 && c.isChecked()) {
                             user.points = user.points+1;
-                            db.correctAnswerUpdate(user, question);
-                            return true;
+                            correct = true;
                         }
 
                         if (question.correctAnswer == 3 && d.isChecked()) {
                             user.points = user.points+1;
-                            db.correctAnswerUpdate(user, question);
+                            correct = true;
+                        }
+
+                        if (correct) {
+                            String userName = db.correctAnswerUpdate(user, question);
+                            if (userName == null) {
+                                File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
+                                if(!file.createNewFile()) {
+                                    Log.d("User file", "Not created");
+                                }
+                                FileOutputStream fileOut = new FileOutputStream(file);
+                                ObjectOutputStream userStream = new ObjectOutputStream(fileOut);
+                                userStream.writeObject(user);
+                                userStream.close();
+
+                                fileOut.close();
+                            }
                             return true;
                         }
+
                         db.falseAnswerUpdate(user, question);
                         return false;
 
                     }catch (Exception e){
+                        try {
+                            File file = new File(Environment.getExternalStorageDirectory() + "/SAQZ/" + AnswerActivity.this.user.email + ".usr");
+                            if(!file.createNewFile()) {
+                                Log.d("User file", "Not created");
+                            }
+                            FileOutputStream fileOut = new FileOutputStream(file);
+                            ObjectOutputStream userStream = new ObjectOutputStream(fileOut);
+                            userStream.writeObject(user);
+                            userStream.close();
+
+                            fileOut.close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                         e.printStackTrace();
                         result = false;
                     }

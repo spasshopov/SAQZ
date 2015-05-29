@@ -157,7 +157,7 @@ public class Db {
         }
     }
 
-    public void correctAnswerUpdate(User user, Question question) {
+    public String correctAnswerUpdate(User user, Question question) {
         try {
             String sql = "UPDATE `user` SET points = "+user.points+" WHERE id = "+user.id+";";
             PreparedStatement statement = con.prepareStatement(sql);
@@ -167,8 +167,19 @@ public class Db {
             statement = con.prepareStatement(sql);
             statement.execute();
 
+            sql = "SELECT username FROM user LIMIT 1;";
+            PreparedStatement statementUser = con.prepareStatement(sql);
+
+            ResultSet result = statementUser.executeQuery();
+            String userName = null;
+            while(result.next()) {
+                userName = result.getString("username");;
+            }
+
+            return  userName;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
