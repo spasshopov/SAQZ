@@ -31,7 +31,7 @@ public class Db {
         try {
             Class.forName(driver).newInstance();
             Log.d("Connection: ", "Before");
-            conn = ConnectionWithTimeout.getConnection(url + dbName + encoding, userName, password,driver,2);
+            conn = ConnectionWithTimeout.getConnection(url + dbName + encoding, userName, password,driver,4);
             //conn = DriverManager.getConnection(url + dbName + encoding, userName, password);
             Log.d("Connection: ", "After");
 
@@ -163,6 +163,10 @@ public class Db {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.execute();
 
+            sql = "UPDATE `user` SET number_answered = "+user.number_answered+" WHERE id = "+user.id+";";
+            statement = con.prepareStatement(sql);
+            statement.execute();
+
             sql = "INSERT INTO `user_answered`(`question_id`, `user_id`) VALUES ("+question.id+","+user.id+")";
             statement = con.prepareStatement(sql);
             statement.execute();
@@ -198,6 +202,15 @@ public class Db {
             String sql = "INSERT INTO `user_answered`(`question_id`, `user_id`) VALUES ("+question.id+","+user.id+")";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.execute();
+
+            sql = "UPDATE `user` SET points = "+user.points+" WHERE id = "+user.id+";";
+            statement = con.prepareStatement(sql);
+            statement.execute();
+
+            sql = "UPDATE `user` SET number_answered = "+user.number_answered+" WHERE id = "+user.id+";";
+            statement = con.prepareStatement(sql);
+            statement.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -222,6 +235,32 @@ public class Db {
         ArrayList<User> users = new ArrayList<User>();
         try {
             String query = "SELECT * FROM `user` ORDER BY points DESC";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                User user = new User();
+                user.id = result.getInt("id");
+                user.points = result.getInt("points");
+                user.nickname = result.getString("nickname");
+                user.email = result.getString("username");
+                users.add(user);
+            }
+
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<User> getAllUsersForChart(int number_answered) {
+        ArrayList<User> users = new ArrayList<User>();
+        try {
+            float min_answered = (float) (number_answered - 0.1*number_answered);
+            float max_answered = (float) (number_answered + 0.1*number_answered);
+            String query = "SELECT * FROM `user` WHERE number_answered < "+max_answered+" AND number_answered > "+min_answered+" ORDER BY points DESC";
             PreparedStatement statement = con.prepareStatement(query);
 
             ResultSet result = statement.executeQuery();

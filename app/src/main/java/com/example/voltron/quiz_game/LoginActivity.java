@@ -83,6 +83,7 @@ public class LoginActivity extends ActionBarActivity {
                             user.id = result.getInt("id");
                             user.nickname = result.getString("nickname");
                             user.points = result.getInt("points");
+                            user.number_answered = result.getInt("number_answered");
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();

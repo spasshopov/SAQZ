@@ -56,7 +56,7 @@ public class UserChartActivity extends ActionBarActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    return db.getAllUsers();
+                    return db.getAllUsersForChart(user.number_answered);
                 }
                 return  null;
             }

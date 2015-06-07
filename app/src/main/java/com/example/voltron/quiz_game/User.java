@@ -12,5 +12,5 @@ public class User implements Serializable{
     public String email;
     public int points;
     public int id;
-
+    public int number_answered;
 }

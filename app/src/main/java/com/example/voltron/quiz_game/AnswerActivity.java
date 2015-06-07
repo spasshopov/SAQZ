@@ -274,6 +274,7 @@ public class AnswerActivity extends ActionBarActivity {
                     Log.d("Online answering", "Answer online");
                     boolean correct = false;
                     try {
+                        user.number_answered = user.number_answered+1;
                         if (question.correctAnswer == 0 && a.isChecked()) {
                             user.points = user.points+1;
                             correct = true;
@@ -310,7 +311,7 @@ public class AnswerActivity extends ActionBarActivity {
                             }
                             return true;
                         }
-
+                        user.points = user.points-1;
                         db.falseAnswerUpdate(user, question);
                         return false;
 
@@ -334,6 +335,7 @@ public class AnswerActivity extends ActionBarActivity {
                     }
                 } else {
                     Log.d("Offline answering", "Answer offline");
+                    user.number_answered = user.number_answered+1;
                     if (question.correctAnswer == 0 && a.isChecked()) {
                         user.points = user.points+1;
                         result = true;
@@ -367,6 +369,10 @@ public class AnswerActivity extends ActionBarActivity {
                             er.printStackTrace();
                             return false;
                     }
+                }
+
+                if (!result) {
+                    user.points = user.points-1;
                 }
 
                 return result;
