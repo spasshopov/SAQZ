@@ -9,5 +9,8 @@
     <string name="title_activity_create">CreateActivity</string>
     <string name="title_activity_answer">AnswerActivity</string>
     <string name="title_activity_user_chart">UserChartActivity</string>
+    <string name="title_activity_create_quiz">CreateQuizActivity</string>
+    <string name="title_activity_quiz_options">QuizOptionsActivity</string>
+    <string name="title_activity_create_quiz_question">CreateQuizQuestionActivity</string>
 
 </resources>

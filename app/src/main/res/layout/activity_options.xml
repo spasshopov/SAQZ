@@ -50,7 +50,16 @@
             style="?android:attr/button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Задавай!"
+            android:text="Create Quiz"
+            android:id="@+id/buttonCreateQuiz"
+            android:clickable="true"
+            android:onClick="startCreateQuizActivity"/>
+
+        <Button
+            style="?android:attr/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Create Question"
             android:id="@+id/button"
             android:clickable="true"
             android:onClick="startCreateActivity"/>
@@ -59,7 +68,7 @@
             style="?android:attr/button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Отговаряй"
+            android:text="Answer question"
             android:id="@+id/button2"
             android:clickable="true"
             android:onClick="startAnswerActivity" />
@@ -68,7 +77,7 @@
             style="?android:attr/button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Класация"
+            android:text="User Chart"
             android:id="@+id/button3"
             android:clickable="true"
             android:onClick="startUserChartActivity" />
@@ -77,7 +86,7 @@
             style="?android:attr/button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Приготви за offline игра"
+            android:text="Cache"
             android:id="@+id/button4"
             android:clickable="true"
             android:onClick="prepareForOffline" />

@@ -87,6 +87,14 @@ public class OptionsActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void startCreateQuizActivity(View v) {
+        Intent intent = new Intent(this, CreateQuizActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     public void prepareForOffline(View v) {
         final Db db = new Db();
         class prepareOfflineQuestions extends AsyncTask<String, Void, String> {

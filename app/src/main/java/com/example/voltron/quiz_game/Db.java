@@ -280,4 +280,43 @@ public class Db {
             return null;
         }
     }
+
+    public ResultSet createQuiz(String quizName, String quizIdentifier, String password, int userId) {
+        try {
+            String sql = "INSERT INTO `quiz` (`userId`, `name`, `identifier`, `password`) VALUES ("+userId+", '"+quizName+"', '"+quizIdentifier+"', MD5('"+password+"'));";
+            PreparedStatement statement = con.prepareStatement(sql);
+            Log.d("SQL: ", sql);
+            statement.execute();
+
+            String query = "SELECT * FROM `quiz` WHERE identifier = '"+quizIdentifier+"' AND password = MD5('"+password+"');";
+            Log.d("SQL: ", query);
+            statement = con.prepareStatement(query);
+
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int createQuizQuestion(String questionText, int userId, int quizId) throws Exception {
+        try {
+            String sql = "INSERT INTO `questions`(`question`, `user_id`, `quiz_id`) VALUES ('"+questionText+"','"+userId+"','"+quizId+"')";
+            PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate();
+            ResultSet result;
+            result = statement.getGeneratedKeys();
+
+            if(result.next() && result != null){
+                return result.getInt(1);
+            } else {
+                throw new Exception("not inserted");
+            }
+
+//            statement.execute();
+
+        } catch (SQLException e) {
+            throw new Exception("not inserted");
+        }
+    }
 }
