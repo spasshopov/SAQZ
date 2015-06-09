@@ -155,4 +155,12 @@ public class OptionsActivity extends ActionBarActivity {
 
         new prepareOfflineQuestions().execute("");
     }
+
+    public void startStartQuizActivity(View v) {
+        Intent intent = new Intent(this, QuizStartActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }

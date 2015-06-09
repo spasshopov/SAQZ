@@ -53,6 +53,10 @@
             android:name=".CreateQuizQuestionActivity"
             android:label="@string/title_activity_create_quiz_question" >
         </activity>
+        <activity
+            android:name=".QuizStartActivity"
+            android:label="@string/title_activity_quiz_start" >
+        </activity>
     </application>
 
 </manifest>

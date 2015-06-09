@@ -285,11 +285,9 @@ public class Db {
         try {
             String sql = "INSERT INTO `quiz` (`userId`, `name`, `identifier`, `password`) VALUES ("+userId+", '"+quizName+"', '"+quizIdentifier+"', MD5('"+password+"'));";
             PreparedStatement statement = con.prepareStatement(sql);
-            Log.d("SQL: ", sql);
             statement.execute();
 
             String query = "SELECT * FROM `quiz` WHERE identifier = '"+quizIdentifier+"' AND password = MD5('"+password+"');";
-            Log.d("SQL: ", query);
             statement = con.prepareStatement(query);
 
             return statement.executeQuery();
@@ -317,6 +315,18 @@ public class Db {
 
         } catch (SQLException e) {
             throw new Exception("not inserted");
+        }
+    }
+
+    public ResultSet getQuiz(String quizIdentifier, String password) {
+        try {
+            String query = "SELECT * FROM `quiz` WHERE identifier = '"+quizIdentifier+"' AND password = MD5('"+password+"');";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

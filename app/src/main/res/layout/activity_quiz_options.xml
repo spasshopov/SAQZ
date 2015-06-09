@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:paddingTop="15dp"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".OptionsActivity"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context="QuizOptionsActivity"
     android:weightSum="1">
 
     <LinearLayout
@@ -50,55 +50,19 @@
             style="?android:attr/button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Create Quiz"
-            android:id="@+id/buttonCreateQuiz"
-            android:clickable="true"
-            android:onClick="startCreateQuizActivity"/>
-
-        <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Take a quiz"
-            android:id="@+id/buttonTakeQuiz"
-            android:clickable="true"
-            android:onClick="startStartQuizActivity"/>
-
-        <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
             android:text="Create Question"
             android:id="@+id/button"
             android:clickable="true"
-            android:onClick="startCreateActivity"/>
+            android:onClick="startCreateQuestionAction"/>
 
         <Button
             style="?android:attr/button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Answer question"
+            android:text="Quiz Done!"
             android:id="@+id/button2"
             android:clickable="true"
-            android:onClick="startAnswerActivity" />
-
-        <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="User Chart"
-            android:id="@+id/button3"
-            android:clickable="true"
-            android:onClick="startUserChartActivity" />
-
-        <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Cache"
-            android:id="@+id/button4"
-            android:clickable="true"
-            android:onClick="prepareForOffline" />
+            android:onClick="startDoneAction" />
     </LinearLayout>
 
 </LinearLayout>
