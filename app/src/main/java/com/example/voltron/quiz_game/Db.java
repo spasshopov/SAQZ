@@ -123,26 +123,26 @@ public class Db {
 
     public Question getQuestionForUser(User user) {
         try {
-            String query = "SELECT * \n" +
-                    "FROM questions, answers\n" +
-                    "WHERE questions.id = answers.question_id\n" +
-                    "AND questions.user_id != "+user.id+"\n" +
-                    "AND questions.id NOT IN (SELECT user_answered.question_id FROM user_answered WHERE user_answered.user_id = "+user.id+")\n" +
-                    "LIMIT 4;";
+                    String query = "SELECT * \n" +
+                            "FROM questions, answers\n" +
+                            "WHERE questions.id = answers.question_id\n" +
+                            "AND questions.user_id != "+user.id+"\n" +
+                            "AND questions.id NOT IN (SELECT user_answered.question_id FROM user_answered WHERE user_answered.user_id = "+user.id+")\n" +
+                            "LIMIT 4;";
 
-            PreparedStatement statement = con.prepareStatement(query);
+                    PreparedStatement statement = con.prepareStatement(query);
 
-            ResultSet result = statement.executeQuery();
-            Question question = new Question();
+                    ResultSet result = statement.executeQuery();
+                    Question question = new Question();
 
-            while(result.next()) {
-                question.question = result.getString("question");
-                question.answer[result.getInt("index")] = result.getString("answer");
-                question.id = result.getInt("question_id");
-                question.reports = result.getInt("reports");
-                if (result.getInt("correct") == 1) {
-                    question.correctAnswer = result.getInt("index");
-                }
+                    while(result.next()) {
+                        question.question = result.getString("question");
+                        question.answer[result.getInt("index")] = result.getString("answer");
+                        question.id = result.getInt("question_id");
+                        question.reports = result.getInt("reports");
+                        if (result.getInt("correct") == 1) {
+                            question.correctAnswer = result.getInt("index");
+                        }
             }
 
             if(question.question == null) {
@@ -321,6 +321,65 @@ public class Db {
     public ResultSet getQuiz(String quizIdentifier, String password) {
         try {
             String query = "SELECT * FROM `quiz` WHERE identifier = '"+quizIdentifier+"' AND password = MD5('"+password+"');";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ResultSet getQuestionForQuiz(int id) {
+        try {
+            String query = "SELECT * FROM `questions` WHERE quiz_id = "+id+";";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            return statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Question getAnswersForQuestion(int id) {
+        try {
+            String query = "SELECT * \n" +
+                    "FROM questions, answers\n" +
+                    "WHERE questions.id = answers.question_id\n" +
+                    "AND questions.id = "+id+"\n" +
+                    "LIMIT 4;";
+
+            PreparedStatement statement = con.prepareStatement(query);
+
+            ResultSet result = statement.executeQuery();
+            Question question = new Question();
+
+            while(result.next()) {
+                question.question = result.getString("question");
+                question.answer[result.getInt("index")] = result.getString("answer");
+                question.id = result.getInt("question_id");
+                question.reports = result.getInt("reports");
+                if (result.getInt("correct") == 1) {
+                    question.correctAnswer = result.getInt("index");
+                }
+            }
+
+            if(question.question == null) {
+                return null;
+            }
+
+            return  question;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ResultSet getQuestionIdsForQuiz(int id) {
+        try {
+            String query = "SELECT id FROM `questions` WHERE quiz_id = "+id+";";
             PreparedStatement statement = con.prepareStatement(query);
 
             return statement.executeQuery();

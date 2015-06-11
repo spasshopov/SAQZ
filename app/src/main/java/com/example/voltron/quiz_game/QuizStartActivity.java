@@ -1,5 +1,6 @@
 package com.example.voltron.quiz_game;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -106,8 +107,11 @@ public class QuizStartActivity extends ActionBarActivity {
     }
 
     private void startQuizActivity(Quiz quiz) {
-        Toast.makeText(getBaseContext(),
-                "Starting quiz: "+quiz.name, Toast.LENGTH_LONG)
-                .show();
+        Intent intent = new Intent(this, QuizActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        bundle.putSerializable("quiz", quiz);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
