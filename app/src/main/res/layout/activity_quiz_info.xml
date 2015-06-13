@@ -89,7 +89,7 @@
                     android:clickable="true"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
-                    android:background="@drawable/button_style_not_clicked"
+                    android:background="@drawable/button_style"
                     android:shadowColor="#A8A8A8"
                     android:shadowDx="0"
                     android:shadowDy="0"
