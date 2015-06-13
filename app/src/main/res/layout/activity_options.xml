@@ -47,58 +47,107 @@
         android:gravity="top|center_horizontal">
 
         <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Create Quiz"
             android:id="@+id/buttonCreateQuiz"
+            android:text="Create Quiz"
+            android:textColor="#D1EDCA"
+            android:textSize="15sp"
             android:clickable="true"
-            android:onClick="startCreateQuizActivity"/>
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style_not_clicked"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:onClick="startCreateQuizActivity"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"/>
 
         <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Take a quiz"
             android:id="@+id/buttonTakeQuiz"
+            android:text="Take a quiz"
+            android:textColor="#D1EDCA"
+            android:textSize="15sp"
             android:clickable="true"
-            android:onClick="startStartQuizActivity"/>
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style_not_clicked"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:onClick="startStartQuizActivity"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp" />
 
         <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Create Question"
             android:id="@+id/button"
+            android:text="Create Question"
+            android:textColor="#D1EDCA"
+            android:textSize="15sp"
             android:clickable="true"
-            android:onClick="startCreateActivity"/>
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style_not_clicked"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:onClick="startCreateActivity"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp" />
 
         <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Answer question"
             android:id="@+id/button2"
+            android:text="Answer question"
+            android:textColor="#D1EDCA"
+            android:textSize="15sp"
             android:clickable="true"
-            android:onClick="startAnswerActivity" />
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style_not_clicked"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:onClick="startAnswerActivity"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp" />
 
         <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="User Chart"
             android:id="@+id/button3"
+            android:text="User Chart"
+            android:textColor="#D1EDCA"
+            android:textSize="15sp"
             android:clickable="true"
-            android:onClick="startUserChartActivity" />
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style_not_clicked"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:onClick="startUserChartActivity"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp" />
 
         <Button
-            style="?android:attr/button"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Cache"
             android:id="@+id/button4"
+            android:text="Prepare Cache"
+            android:textColor="#D1EDCA"
+            android:textSize="15sp"
             android:clickable="true"
-            android:onClick="prepareForOffline" />
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style_not_clicked"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:onClick="prepareForOffline"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp" />
+
     </LinearLayout>
 
 </LinearLayout>
