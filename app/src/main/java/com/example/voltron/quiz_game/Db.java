@@ -388,4 +388,17 @@ public class Db {
             return null;
         }
     }
+
+    public void saveQuizHistory(QuizHistory quizHistory) throws Exception{
+        try {
+            String sql = "INSERT INTO `quiz_history`(`user_id`, `quiz_id`, `success_rate`, `wrong_answered`) VALUES ("+quizHistory.userId+","+quizHistory.quizId+","+quizHistory.successRate+", '"+quizHistory.wrongAnswered+"')";
+            PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate();
+            ResultSet result;
+            result = statement.getGeneratedKeys();
+
+        } catch (SQLException e) {
+            throw new Exception("not inserted");
+        }
+    }
 }

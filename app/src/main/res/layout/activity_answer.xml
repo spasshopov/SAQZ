@@ -138,7 +138,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Верен отговор: "
+                        android:text="Right answer: "
                         android:id="@+id/textView12" />
 
                     <LinearLayout
@@ -151,7 +151,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="А"
+                            android:text="A"
                             android:id="@+id/answer_a" />
                         <LinearLayout
                             android:orientation="vertical"
@@ -162,7 +162,7 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Б"
+                            android:text="B"
                             android:id="@+id/answer_b" />
                         <LinearLayout
                             android:orientation="vertical"
@@ -173,7 +173,7 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="В"
+                            android:text="C"
                             android:id="@+id/answer_c" />
                         <LinearLayout
                             android:orientation="vertical"
@@ -184,7 +184,7 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Г"
+                            android:text="D"
                             android:id="@+id/answer_d" />
                     </LinearLayout>
 
@@ -194,7 +194,7 @@
                         <Button
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Отговори"
+                            android:text="Answer"
                             android:id="@+id/answer_question"
                             android:onClick="answerQuestion"
                             android:layout_marginTop="20dp" />
@@ -206,7 +206,7 @@
                         <Button
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Некоректен въпрос!"
+                            android:text="Report invalid question!"
                             android:id="@+id/answer_report"
                             android:onClick="reportQuestion"
                             android:layout_marginTop="20dp" />

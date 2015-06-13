@@ -14,5 +14,6 @@
     <string name="title_activity_create_quiz_question">CreateQuizQuestionActivity</string>
     <string name="title_activity_quiz_start">QuizStartActivity</string>
     <string name="title_activity_quiz">QuizActivity</string>
+    <string name="title_activity_quiz_info">QuizInfoActivity</string>
 
 </resources>

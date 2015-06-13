@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="40dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Текст на въпроса:"
+                        android:text="Question:"
                         android:id="@+id/textView7" />
 
                     <EditText
@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Отговор А:"
+                        android:text="Answer A:"
                         android:id="@+id/textView8" />
 
                     <EditText
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Отговор Б:"
+                        android:text="Answer B:"
                         android:id="@+id/textView9" />
 
                     <EditText
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Отговор В:"
+                        android:text="Answer C:"
                         android:id="@+id/textView10" />
 
                     <EditText
@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Отговор Г:"
+                        android:text="Answer D:"
                         android:id="@+id/textView11" />
 
                     <EditText
@@ -159,8 +159,6 @@
                         android:background="@drawable/question_input_background"
                         android:id="@+id/answer_d" />
 
-
-
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
@@ -172,7 +170,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Верен отговор: "
+                        android:text="The right answer is: "
                         android:id="@+id/textView12" />
 
                     <LinearLayout
@@ -185,7 +183,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:text="А"
+                            android:text="A"
                             android:id="@+id/correct_a" />
                         <LinearLayout
                             android:orientation="vertical"
@@ -196,7 +194,7 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Б"
+                            android:text="B"
                             android:id="@+id/correct_b" />
                         <LinearLayout
                             android:orientation="vertical"
@@ -207,7 +205,7 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="В"
+                            android:text="C"
                             android:id="@+id/correct_c" />
                         <LinearLayout
                             android:orientation="vertical"
@@ -218,7 +216,7 @@
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Г"
+                            android:text="D"
                             android:id="@+id/correct_d" />
                     </LinearLayout>
 
@@ -228,7 +226,7 @@
                         <Button
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Задай"
+                            android:text="Save"
                             android:id="@+id/save_question"
                             android:onClick="saveQuestion"
                             android:layout_marginTop="20dp" />
