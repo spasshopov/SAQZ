@@ -87,6 +87,7 @@
             android:id="@+id/button"
             android:clickable="true"
             android:layout_marginRight="5dp"
+            android:background="@drawable/green_button"
             android:onClick="startRegisterActivity"/>
 
         <Button
@@ -96,6 +97,7 @@
             android:text="Вход"
             android:id="@+id/button2"
             android:layout_marginLeft="5dp"
+            android:background="@drawable/green_button"
             android:clickable="true"
             android:onClick="logInAction" />
     </LinearLayout>
