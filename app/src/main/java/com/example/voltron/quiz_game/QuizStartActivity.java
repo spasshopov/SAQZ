@@ -73,6 +73,7 @@ public class QuizStartActivity extends ActionBarActivity {
                             quiz.name = result.getString("name");
                             quiz.identifier = result.getString("identifier");
                             quiz.userId = result.getInt("userId");
+                            quiz.time = result.getInt("time");
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();

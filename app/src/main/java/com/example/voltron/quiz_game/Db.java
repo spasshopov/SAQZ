@@ -281,9 +281,9 @@ public class Db {
         }
     }
 
-    public ResultSet createQuiz(String quizName, String quizIdentifier, String password, int userId) {
+    public ResultSet createQuiz(String quizName, String quizIdentifier, String password, String time, int userId) {
         try {
-            String sql = "INSERT INTO `quiz` (`userId`, `name`, `identifier`, `password`) VALUES ("+userId+", '"+quizName+"', '"+quizIdentifier+"', MD5('"+password+"'));";
+            String sql = "INSERT INTO `quiz` (`userId`, `name`, `identifier`, `password`, `time`) VALUES ("+userId+", '"+quizName+"', '"+quizIdentifier+"', MD5('"+password+"'), "+time+");";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.execute();
 
@@ -399,6 +399,26 @@ public class Db {
 
         } catch (SQLException e) {
             throw new Exception("not inserted");
+        }
+    }
+
+    public boolean checkQuizIdentifier(String quizIdentifier) {
+
+        try {
+            String query = "SELECT count(*) as rows FROM `quiz` WHERE identifier = '"+quizIdentifier+"';";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            ResultSet res = statement.executeQuery();
+
+            if (res.next()) {
+                if (res.getInt("rows") == 0) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

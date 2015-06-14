@@ -217,7 +217,6 @@
                             android:shadowDy="0"
                             android:shadowRadius="5"
                             android:onClick="answerQuestion"
-                            android:layout_marginRight="5dp"
                             android:layout_marginBottom="20dp"
                             android:layout_marginTop="20dp" />
                     </LinearLayout>

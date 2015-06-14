@@ -93,7 +93,6 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:onClick="startQuizAction"
-            android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp" />
 

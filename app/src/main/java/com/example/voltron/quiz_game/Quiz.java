@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Quiz implements Serializable{
     public int id;
     public int userId;
+    public int time;
     public String identifier;
     public String name;
     public Question[] questions;

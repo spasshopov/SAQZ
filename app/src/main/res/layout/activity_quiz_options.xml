@@ -60,7 +60,6 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:onClick="startCreateQuestionAction"
-            android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp" />
 
@@ -78,7 +77,6 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:onClick="startDoneAction"
-            android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp" />
     </LinearLayout>

@@ -3,8 +3,8 @@ package com.example.voltron.quiz_game;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,12 +33,14 @@ public class QuizActivity extends ActionBarActivity {
     private int numberOfQuestions;
     private Question loadedQuestion;
     private QuizHistory quizHistory;
+    private CountDownTimer counter = null;
+    private TextView countDownField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
+        countDownField = (TextView) findViewById(R.id.timerText);
         q = (TextView) findViewById(R.id.questionText);
         a_answer = (TextView) findViewById(R.id.answer_row_a);
         b_answer = (TextView) findViewById(R.id.answer_row_b);
@@ -117,7 +119,6 @@ public class QuizActivity extends ActionBarActivity {
     }
 
     private void loadNextQuestion() {
-        Log.d("Questions: ", " "+quiz.questions.length);
         if (quiz.questions.length > 0) {
             this.q.setText(quiz.questions[0].question);
             this.a_answer.setText(quiz.questions[0].answer[0]);
@@ -130,17 +131,33 @@ public class QuizActivity extends ActionBarActivity {
                 questions[i - 1] = quiz.questions[i];
             }
 
+            if (counter == null) {
+                runTimer();
+            }
+
             quiz.questions = questions;
         } else {
-            quizHistory.successRate = (int) ((quizHistory.successRate*100)/numberOfQuestions);
-            Toast.makeText(getBaseContext(),
-                    "Success rate: "+quizHistory.successRate+"%\n Wrong: \n"+quizHistory.wrongAnswered, Toast.LENGTH_LONG)
-                    .show();
+            if (counter != null) {
+                counter.cancel();
+            }
 
-            quizHistory.quizName = quiz.name;
-            saveQuizHistory(quizHistory);
+            if (numberOfQuestions == 0) {
+                Toast.makeText(getBaseContext(),
+                        "quiz is empty", Toast.LENGTH_LONG)
+                        .show();
+                quizHistory.successRate = 100;
+                quizHistory.wrongAnswered = "No questions in this quiz!";
+            } else {
+                quizHistory.successRate = (int) ((quizHistory.successRate * 100) / numberOfQuestions);
+                Toast.makeText(getBaseContext(),
+                        "Success rate: " + quizHistory.successRate + "%\n Wrong: \n" + quizHistory.wrongAnswered, Toast.LENGTH_LONG)
+                        .show();
+
+                quizHistory.quizName = quiz.name;
+                saveQuizHistory(quizHistory);
+            }
+
             startQuizInfoActivity(quizHistory);
-            return;
         }
     }
 
@@ -287,5 +304,27 @@ public class QuizActivity extends ActionBarActivity {
             quizHistory.wrongAnswered += loadedQuestion.question+"\n";
         }
         loadNextQuestion();
+    }
+
+    private void runTimer() {
+        long miliSeconds = quiz.time*60*1000;
+        counter = new CountDownTimer(miliSeconds, 1000*60) {
+
+            public void onTick(long millisUntilFinished) {
+                String counterText;
+                counterText = millisUntilFinished / (1000*60)+" minutes remaining...";
+
+                countDownField.setText(counterText);
+            }
+
+            public void onFinish() {
+                Toast.makeText(getBaseContext(),
+                        "Times up!", Toast.LENGTH_SHORT)
+                        .show();
+                startQuizInfoActivity(quizHistory);
+                finish();
+            }
+        }.start();
+
     }
 }

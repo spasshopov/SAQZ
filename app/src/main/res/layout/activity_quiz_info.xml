@@ -95,7 +95,6 @@
                     android:shadowDy="0"
                     android:shadowRadius="5"
                     android:onClick="startOptionsActivity"
-                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="2dp"
                     android:layout_marginTop="20dp" />
 

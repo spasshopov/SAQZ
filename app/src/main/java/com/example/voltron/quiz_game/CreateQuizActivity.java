@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,26 +57,29 @@ public class CreateQuizActivity extends ActionBarActivity {
         EditText quizIdentifierText = (EditText) findViewById(R.id.quizIdentifierText);
         EditText paswordText = (EditText) findViewById(R.id.passwordtext);
         EditText paswordReapeatText = (EditText) findViewById(R.id.passwordtextreapeat);
+        EditText timeText = (EditText) findViewById(R.id.quiztimetext);
 
         final String quizName = quizNameText.getText().toString();
         final String quizIdentifier = quizIdentifierText.getText().toString();
         final String password = paswordText.getText().toString();
         final String passwordReapeat = paswordReapeatText.getText().toString();
-        Log.d("CQ: ", quizName);
+        final String time = timeText.getText().toString();
+
         if (!password.equals(passwordReapeat)) {
             Toast.makeText(getBaseContext(),
                     "Password doesn't match!", Toast.LENGTH_LONG)
                     .show();
         } else {
             final Db db = new Db();
-            Log.d("CQ: ", "creating quiz");
             class createQuiz extends AsyncTask<String, Void, Quiz> {
                 @Override
                 protected Quiz doInBackground(String... params) {
                     ResultSet result = null;
                     if(db.init()){
-                        result = db.createQuiz(quizName, quizIdentifier, password, user.id);
-                        Log.d("CQ: ", "sdfsd");
+                        if (db.checkQuizIdentifier(quizIdentifier) == false) {
+                            return null;
+                        }
+                        result = db.createQuiz(quizName, quizIdentifier, password, time, user.id);
                         Quiz quiz = null;
                         try {
                             while (result.next()) {
@@ -85,6 +87,7 @@ public class CreateQuizActivity extends ActionBarActivity {
                                 quiz.id = result.getInt("id");
                                 quiz.identifier = result.getString("identifier");
                                 quiz.userId = result.getInt("userId");
+                                quiz.time = result.getInt("time");
                             }
                             return quiz;
                         } catch (SQLException e) {
@@ -106,6 +109,10 @@ public class CreateQuizActivity extends ActionBarActivity {
                         bundle.putSerializable("quiz", quiz);
                         intent.putExtras(bundle);
                         startActivity(intent);
+                    } else {
+                        Toast.makeText(getBaseContext(),
+                                "Identifier already in use!", Toast.LENGTH_LONG)
+                                .show();
                     }
                 }
 
