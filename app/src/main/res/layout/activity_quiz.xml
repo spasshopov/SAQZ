@@ -58,19 +58,29 @@
                     android:paddingLeft="16dp"
                     android:layout_height="fill_parent">
 
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="7dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textStyle="italic"
+                        android:text="30 seconds remaining..."
+                        android:id="@+id/timerText" />
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="...loading"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textStyle="bold"
+                        android:text="...loading question"
                         android:id="@+id/questionText" />
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="3dp"
                         android:layout_marginTop="10dp"
                         android:background="#000000"></LinearLayout>
 
@@ -78,7 +88,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="...loading"
                         android:id="@+id/answer_row_a" />
 
@@ -93,7 +103,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="...loading"
                         android:id="@+id/answer_row_b" />
 
@@ -108,7 +118,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="...loading"
                         android:id="@+id/answer_row_c" />
 
@@ -123,21 +133,22 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="...loading"
                         android:id="@+id/answer_row_d" />
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="3dp"
                         android:layout_marginTop="10dp"
                         android:background="#000000"></LinearLayout>
 
                     <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_marginTop="10dp"
                         android:text="Right answer: "
                         android:id="@+id/textView12" />
 
@@ -190,15 +201,15 @@
 
                     <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-
+                        android:layout_height="fill_parent"
+                        android:gravity="center" >
                         <Button
                             android:id="@+id/answer_question"
                             android:text="Answer"
                             android:textColor="#D1EDCA"
                             android:textSize="15sp"
                             android:clickable="true"
-                            android:layout_width="fill_parent"
+                            android:layout_width="250dp"
                             android:layout_height="40dp"
                             android:background="@drawable/button_style"
                             android:shadowColor="#A8A8A8"
@@ -207,9 +218,8 @@
                             android:shadowRadius="5"
                             android:onClick="answerQuestion"
                             android:layout_marginRight="5dp"
-                            android:layout_marginBottom="2dp"
+                            android:layout_marginBottom="20dp"
                             android:layout_marginTop="20dp" />
-
                     </LinearLayout>
 
                 </LinearLayout>

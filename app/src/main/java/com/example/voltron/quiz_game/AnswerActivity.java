@@ -3,12 +3,14 @@ package com.example.voltron.quiz_game;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +33,18 @@ public class AnswerActivity extends ActionBarActivity {
     private RadioButton b;
     private RadioButton c;
     private RadioButton d;
+    private Button answerQuestion;
     private Question question;
+    private TextView countDownField;
+    private int counterDots = 1;
+    private CountDownTimer counter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
+        countDownField = (TextView) findViewById(R.id.timerText);
+        answerQuestion = (Button) findViewById(R.id.answer_question);
 
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null) {
@@ -170,13 +178,20 @@ public class AnswerActivity extends ActionBarActivity {
                         Toast.makeText(getBaseContext(),
                                 "No more question available!", Toast.LENGTH_LONG)
                                 .show();
+                        if (counter != null) {
+                            counter.cancel();
+                        }
                         goToOptionsActivity();
                     } else {
                         this.q.setText(question.question);
-                        this.a_answer.setText(question.answer[0]);
-                        this.b_answer.setText(question.answer[1]);
-                        this.c_answer.setText(question.answer[2]);
-                        this.d_answer.setText(question.answer[3]);
+                        this.a_answer.setText("A: "+question.answer[0]);
+                        this.b_answer.setText("B: "+question.answer[1]);
+                        this.c_answer.setText("C: "+question.answer[2]);
+                        this.d_answer.setText("D: "+question.answer[3]);
+                        if (counter != null) {
+                            counter.cancel();
+                        }
+                        runTimer();
                     }
                 }
 
@@ -192,6 +207,34 @@ public class AnswerActivity extends ActionBarActivity {
             new GetQuestion(_q, _a_answer, _b_answer, _c_answer, _d_answer).execute();
             initiateRadioButtons();
         }
+    }
+
+    private void runTimer() {
+        counter = new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                String counterText;
+                if (counterDots == 1) {
+                    counterText = millisUntilFinished / 1000+" seconds remaining.";
+                    counterDots++;
+                } else if (counterDots == 2) {
+                    counterText = millisUntilFinished / 1000+" seconds remaining..";
+                    counterDots++;
+                } else {
+                    counterText = millisUntilFinished / 1000+" seconds remaining...";
+                    counterDots = 1;
+                }
+                countDownField.setText(counterText);
+            }
+
+            public void onFinish() {
+                Toast.makeText(getBaseContext(),
+                        "Times up!", Toast.LENGTH_SHORT)
+                        .show();
+                answerQuestion.performClick();
+            }
+        }.start();
+
     }
 
     @Override
@@ -401,6 +444,9 @@ public class AnswerActivity extends ActionBarActivity {
     }
 
     public void reportQuestion(View v) {
+        if (counter != null) {
+            counter.cancel();
+        }
         class ReportQuestion extends AsyncTask<Void, Void, Boolean> {
 
             @Override
@@ -445,6 +491,9 @@ public class AnswerActivity extends ActionBarActivity {
 
     private void restartMe()
     {
+        if (counter != null) {
+            counter.cancel();
+        }
         Intent intent = getIntent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("user", user);
@@ -454,6 +503,9 @@ public class AnswerActivity extends ActionBarActivity {
     }
 
     public void goToOptionsActivity(){
+        if (counter != null) {
+            counter.cancel();
+        }
         Intent intent = new Intent(this, OptionsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("user", user);
