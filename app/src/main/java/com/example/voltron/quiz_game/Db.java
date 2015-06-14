@@ -283,7 +283,8 @@ public class Db {
 
     public ResultSet createQuiz(String quizName, String quizIdentifier, String password, String time, int userId) {
         try {
-            String sql = "INSERT INTO `quiz` (`userId`, `name`, `identifier`, `password`, `time`) VALUES ("+userId+", '"+quizName+"', '"+quizIdentifier+"', MD5('"+password+"'), "+time+");";
+            int time_ = Integer.parseInt(time) + 1;
+            String sql = "INSERT INTO `quiz` (`userId`, `name`, `identifier`, `password`, `time`) VALUES ("+userId+", '"+quizName+"', '"+quizIdentifier+"', MD5('"+password+"'), "+time_+");";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.execute();
 
@@ -320,7 +321,11 @@ public class Db {
 
     public ResultSet getQuiz(String quizIdentifier, String password) {
         try {
-            String query = "SELECT * FROM `quiz` WHERE identifier = '"+quizIdentifier+"' AND password = MD5('"+password+"');";
+            String query = "SELECT `quiz` . * , `user`.username as email\n" +
+                    "FROM `quiz`\n" +
+                    "LEFT JOIN `user` ON `user`.`id` = `quiz`.`userId`\n" +
+                    "WHERE quiz.identifier = '"+quizIdentifier+"'\n" +
+                    "AND quiz.password = MD5( '"+password+"' ); ";
             PreparedStatement statement = con.prepareStatement(query);
 
             return statement.executeQuery();

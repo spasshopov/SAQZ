@@ -9,6 +9,7 @@ public class Quiz implements Serializable{
     public int id;
     public int userId;
     public int time;
+    public String creatorEmail;
     public String identifier;
     public String name;
     public Question[] questions;

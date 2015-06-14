@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +13,21 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class QuizActivity extends ActionBarActivity {
@@ -121,10 +135,10 @@ public class QuizActivity extends ActionBarActivity {
     private void loadNextQuestion() {
         if (quiz.questions.length > 0) {
             this.q.setText(quiz.questions[0].question);
-            this.a_answer.setText(quiz.questions[0].answer[0]);
-            this.b_answer.setText(quiz.questions[0].answer[1]);
-            this.c_answer.setText(quiz.questions[0].answer[2]);
-            this.d_answer.setText(quiz.questions[0].answer[3]);
+            this.a_answer.setText("A: "+quiz.questions[0].answer[0]);
+            this.b_answer.setText("B: "+quiz.questions[0].answer[1]);
+            this.c_answer.setText("C: "+quiz.questions[0].answer[2]);
+            this.d_answer.setText("D: "+quiz.questions[0].answer[3]);
             this.loadedQuestion = quiz.questions[0];
             Question[] questions = new Question[quiz.questions.length - 1];
             for (int i = 1; i < quiz.questions.length; i++) {
@@ -154,6 +168,7 @@ public class QuizActivity extends ActionBarActivity {
                         .show();
 
                 quizHistory.quizName = quiz.name;
+                sendSimpleMessage(quizHistory);
                 saveQuizHistory(quizHistory);
             }
 
@@ -280,9 +295,10 @@ public class QuizActivity extends ActionBarActivity {
     }
 
     public void answerQuestion(View v) {
-
+        quizHistory.quizName = quiz.name;
         boolean correct = false;
         if (this.loadedQuestion.correctAnswer == 0 && a.isChecked()) {
+            a.clearFocus();
             correct = true;
         }
 
@@ -312,8 +328,35 @@ public class QuizActivity extends ActionBarActivity {
 
             public void onTick(long millisUntilFinished) {
                 String counterText;
-                counterText = millisUntilFinished / (1000*60)+" minutes remaining...";
 
+                if ((millisUntilFinished / (1000*60)) == 1) {
+                    runOneMinuteTimer();
+                } else {
+                    counterText = (millisUntilFinished / (1000 * 60)) + " minutes remaining...";
+                    countDownField.setText(counterText);
+                }
+            }
+
+            public void onFinish() {
+                Toast.makeText(getBaseContext(),
+                        "Times up!", Toast.LENGTH_SHORT)
+                        .show();
+                quizHistory.successRate = (int) ((quizHistory.successRate * 100) / numberOfQuestions);
+                quizHistory.quizName = quiz.name;
+                startQuizInfoActivity(quizHistory);
+                finish();
+            }
+        }.start();
+
+    }
+
+    private void runOneMinuteTimer() {
+        counter.cancel();
+        counter = new CountDownTimer(60*1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                String counterText;
+                counterText = millisUntilFinished / (1000) + " seconds remaining...";
                 countDownField.setText(counterText);
             }
 
@@ -321,10 +364,70 @@ public class QuizActivity extends ActionBarActivity {
                 Toast.makeText(getBaseContext(),
                         "Times up!", Toast.LENGTH_SHORT)
                         .show();
+                quizHistory.successRate = (int) ((quizHistory.successRate * 100) / numberOfQuestions);
+                quizHistory.quizName = quiz.name;
+                saveQuizHistory(quizHistory);
+                sendSimpleMessage(quizHistory);
                 startQuizInfoActivity(quizHistory);
                 finish();
             }
         }.start();
+    }
+
+    public void sendSimpleMessage(final QuizHistory quizHistory) {
+        Log.d("Sending mail to: ", quiz.creatorEmail);
+        class sendMail extends AsyncTask<String, Void, Boolean> {
+            @Override
+            protected Boolean doInBackground(String... params) {
+                // Create a new HttpClient and Post Header
+                DefaultHttpClient httpclient = new DefaultHttpClient();
+
+                httpclient.getCredentialsProvider().setCredentials(
+                        new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+                        new UsernamePasswordCredentials("api", "key-98bc77afcfee5376f6e5b56267f7ea9b"));
+
+                HttpPost httppost = new HttpPost("https://api.mailgun.net/v3/sandbox7dd69c6cbfc74eb49cb33d1fd570176a.mailgun.org/messages");
+
+                try {
+                    // Add your data
+                    Log.d("Sending mail 2 to: ", QuizActivity.this.quiz.creatorEmail);
+                    Log.d("Quiz taken from: ", QuizActivity.this.user.nickname);
+                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                    nameValuePairs.add(new BasicNameValuePair("from", "SAQZ Sandbox <s.v.shopov@gmail.com>"));
+                    nameValuePairs.add(new BasicNameValuePair("to", "Quiz Creator <"+QuizActivity.this.quiz.creatorEmail+">"));
+                    nameValuePairs.add(new BasicNameValuePair("subject", QuizActivity.this.user.email+"<"+QuizActivity.this.user.nickname+"> took quiz: "+quizHistory.quizName));
+                    nameValuePairs.add(new BasicNameValuePair("text", "Success rate: "+quizHistory.successRate+"%\n"+"Wrong answerd\n: "+quizHistory.wrongAnswered));
+                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                    // Execute HTTP Post Request
+                    HttpResponse response = httpclient.execute(httppost);
+
+                } catch (ClientProtocolException e) {
+                    // TODO Auto-generated catch block
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                }
+                return true;
+            }
+
+            private Question getAnswersForQuestion(int id, Db db) {
+                return db.getAnswersForQuestion(id);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean success) {
+            }
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+            }
+        }
+
+        new sendMail().execute("");
 
     }
 }
