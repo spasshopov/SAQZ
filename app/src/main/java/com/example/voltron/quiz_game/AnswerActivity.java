@@ -136,9 +136,6 @@ public class AnswerActivity extends ActionBarActivity {
                             }
                         }catch (Exception e){
                             result = false;
-                            Toast.makeText(getBaseContext(),
-                                    "Failure!", Toast.LENGTH_LONG)
-                                    .show();
                         }
                     } else {
                         Log.d("Answer: ", "Getting cached");
