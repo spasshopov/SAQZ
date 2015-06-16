@@ -27,9 +27,9 @@ public class QuizInfoActivity extends ActionBarActivity {
             TextView rateText = (TextView) findViewById(R.id.rate);
             TextView wrongText = (TextView) findViewById(R.id.wrong);
 
-            quizText.append(" "+quizHistory.quizName);
-            rateText.append(" "+quizHistory.successRate+"%");
-            wrongText.append(" "+quizHistory.wrongAnswered);
+            quizText.setText(quizHistory.quizName);
+            rateText.setText(quizHistory.successRate+"%");
+            wrongText.setText(quizHistory.wrongAnswered);
         }
     }
 

@@ -135,10 +135,10 @@ public class QuizActivity extends ActionBarActivity {
     private void loadNextQuestion() {
         if (quiz.questions.length > 0) {
             this.q.setText(quiz.questions[0].question);
-            this.a_answer.setText("A: "+quiz.questions[0].answer[0]);
-            this.b_answer.setText("B: "+quiz.questions[0].answer[1]);
-            this.c_answer.setText("C: "+quiz.questions[0].answer[2]);
-            this.d_answer.setText("D: "+quiz.questions[0].answer[3]);
+            this.a_answer.setText(quiz.questions[0].answer[0]);
+            this.b_answer.setText(quiz.questions[0].answer[1]);
+            this.c_answer.setText(quiz.questions[0].answer[2]);
+            this.d_answer.setText(quiz.questions[0].answer[3]);
             this.loadedQuestion = quiz.questions[0];
             Question[] questions = new Question[quiz.questions.length - 1];
             for (int i = 1; i < quiz.questions.length; i++) {
