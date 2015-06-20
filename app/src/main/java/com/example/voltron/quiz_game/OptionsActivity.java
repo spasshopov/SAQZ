@@ -163,4 +163,12 @@ public class OptionsActivity extends ActionBarActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    public void startChangePasswordActivity(View v) {
+        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }

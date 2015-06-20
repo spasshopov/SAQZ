@@ -426,4 +426,31 @@ public class Db {
             return false;
         }
     }
+
+    public ResultSet checkUserEmail(String email) {
+
+        try {
+            String query = "SELECT `username` FROM `user` WHERE username = '"+email+"';";
+            PreparedStatement statement = con.prepareStatement(query);
+
+            ResultSet res = statement.executeQuery();
+
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setNewPassword(String email, String newPassword) {
+        try {
+            String sql = "UPDATE `user` SET password = MD5('"+newPassword+"') WHERE username = '" + email + "';";
+            Log.d("Executinnh: ", sql);
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -15,5 +15,7 @@
     <string name="title_activity_quiz_start">QuizStartActivity</string>
     <string name="title_activity_quiz">QuizActivity</string>
     <string name="title_activity_quiz_info">QuizInfoActivity</string>
+    <string name="title_activity_forgottenb_password">ForgottenbPasswordActivity</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
 
 </resources>

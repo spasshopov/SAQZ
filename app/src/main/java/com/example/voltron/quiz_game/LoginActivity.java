@@ -10,8 +10,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -123,5 +137,162 @@ public class LoginActivity extends ActionBarActivity {
         }
 
         new login().execute("");
+    }
+
+    public void sendNewPasswordAction(View v) {
+        EditText etemail = (EditText) findViewById(R.id.emailtext);
+        final String email = etemail.getText().toString();
+
+        final Db db = new Db();
+        class checkUser extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+                ResultSet result = null;
+                String emailFromDb = null;
+                if(db.init()){
+                    result = db.checkUserEmail(email);
+                    try {
+                        while (result.next()) {
+                            emailFromDb = result.getString("username");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+
+                return emailFromDb;
+            }
+
+            @Override
+            protected void onPostExecute(String email) {
+
+                if(email!=null){
+                    sendNewPasswordTo(email);
+                }else {
+                    Toast.makeText(getBaseContext(),
+                            "Wrong username!", Toast.LENGTH_LONG)
+                            .show();
+                }
+
+            }
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+            }
+        }
+
+        new checkUser().execute("");
+    }
+
+    private void sendNewPasswordTo(final String email) {
+        final  String newPassword = generateString(new Random(), "abcdefghklmnoprtyusiapznq1234567890-=", 8);
+        sendPasswordMail(email, newPassword);
+
+        final Db db = new Db();
+        class saveNewPassword extends AsyncTask<String, Void, Boolean> {
+            @Override
+            protected Boolean doInBackground(String... params) {
+                ResultSet result = null;
+
+                if(db.init()){
+                    try {
+                        db.setNewPassword(email, newPassword);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean success) {
+
+                if(success){
+                    Toast.makeText(getBaseContext(),
+                            "Password sent!", Toast.LENGTH_LONG)
+                            .show();
+                }else {
+                    Toast.makeText(getBaseContext(),
+                            "Password not sent!", Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+            }
+        }
+
+        new saveNewPassword().execute("");
+    }
+
+    public static String generateString(Random rng, String characters, int length)
+    {
+        char[] text = new char[length];
+        for (int i = 0; i < length; i++)
+        {
+            text[i] = characters.charAt(rng.nextInt(characters.length()));
+        }
+        return new String(text);
+    }
+
+    public void sendPasswordMail(final String email, final String password) {
+        class sendMail extends AsyncTask<String, Void, Boolean> {
+            @Override
+            protected Boolean doInBackground(String... params) {
+                // Create a new HttpClient and Post Header
+                DefaultHttpClient httpclient = new DefaultHttpClient();
+
+                httpclient.getCredentialsProvider().setCredentials(
+                        new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+                        new UsernamePasswordCredentials("api", "key-98bc77afcfee5376f6e5b56267f7ea9b"));
+
+                HttpPost httppost = new HttpPost("https://api.mailgun.net/v3/sandbox7dd69c6cbfc74eb49cb33d1fd570176a.mailgun.org/messages");
+
+                try {
+                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+                    nameValuePairs.add(new BasicNameValuePair("from", "SAQZ Sandbox <s.v.shopov@gmail.com>"));
+                    nameValuePairs.add(new BasicNameValuePair("to", "User <"+email+">"));
+                    nameValuePairs.add(new BasicNameValuePair("subject", "New password request."));
+                    nameValuePairs.add(new BasicNameValuePair("text", "Your new password is: "+password));
+                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                    // Execute HTTP Post Request
+                    HttpResponse response = httpclient.execute(httppost);
+
+                } catch (ClientProtocolException e) {
+                    // TODO Auto-generated catch block
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                }
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean success) {
+            }
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+            }
+        }
+
+        new sendMail().execute("");
+
     }
 }

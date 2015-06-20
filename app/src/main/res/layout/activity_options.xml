@@ -37,6 +37,15 @@
         android:layout_height="1dp"
         android:background="#000000"></LinearLayout>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -148,6 +157,25 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp" />
 
+        <Button
+            android:id="@+id/button5"
+            android:text="Change password"
+            android:textColor="#D1EDCA"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_style"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:onClick="startChangePasswordActivity"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp" />
+
     </LinearLayout>
+            </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

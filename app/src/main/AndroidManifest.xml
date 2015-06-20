@@ -65,6 +65,10 @@
             android:name=".QuizInfoActivity"
             android:label="@string/title_activity_quiz_info" >
         </activity>
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/title_activity_change_password" >
+        </activity>
     </application>
 
 </manifest>
