@@ -84,13 +84,22 @@
                         android:layout_marginTop="10dp"
                         android:background="#000000"></LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="...loading"
-                        android:id="@+id/answer_row_a" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="A:   "
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="...loading"
+                            android:id="@+id/answer_row_a" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -99,13 +108,22 @@
                         android:layout_marginTop="10dp"
                         android:background="#000000"></LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="...loading"
-                        android:id="@+id/answer_row_b" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="B:   "
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="...loading"
+                            android:id="@+id/answer_row_b" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -114,13 +132,22 @@
                         android:layout_marginTop="10dp"
                         android:background="#000000"></LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="...loading"
-                        android:id="@+id/answer_row_c" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="C:   "
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="...loading"
+                            android:id="@+id/answer_row_c" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -129,13 +156,22 @@
                         android:layout_marginTop="10dp"
                         android:background="#000000"></LinearLayout>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="...loading"
-                        android:id="@+id/answer_row_d" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="D:   "
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="...loading"
+                            android:id="@+id/answer_row_d" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:orientation="vertical"

@@ -136,9 +136,6 @@ public class AnswerActivity extends ActionBarActivity {
                             }
                         }catch (Exception e){
                             result = false;
-                            Toast.makeText(getBaseContext(),
-                                    "Failure!", Toast.LENGTH_LONG)
-                                    .show();
                         }
                     } else {
                         Log.d("Answer: ", "Getting cached");
@@ -184,10 +181,10 @@ public class AnswerActivity extends ActionBarActivity {
                         goToOptionsActivity();
                     } else {
                         this.q.setText(question.question);
-                        this.a_answer.setText("A: "+question.answer[0]);
-                        this.b_answer.setText("B: "+question.answer[1]);
-                        this.c_answer.setText("C: "+question.answer[2]);
-                        this.d_answer.setText("D: "+question.answer[3]);
+                        this.a_answer.setText(question.answer[0]);
+                        this.b_answer.setText(question.answer[1]);
+                        this.c_answer.setText(question.answer[2]);
+                        this.d_answer.setText(question.answer[3]);
                         if (counter != null) {
                             counter.cancel();
                         }
