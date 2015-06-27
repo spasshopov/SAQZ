@@ -445,12 +445,30 @@ public class Db {
     public void setNewPassword(String email, String newPassword) {
         try {
             String sql = "UPDATE `user` SET password = MD5('"+newPassword+"') WHERE username = '" + email + "';";
-            Log.d("Executinnh: ", sql);
             PreparedStatement statement = con.prepareStatement(sql);
 
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean deleteQuiz(String quizIdentifier, String password, int id) {
+        try {
+            String sql = "DELETE FROM `quiz` WHERE quiz.identifier = '"+quizIdentifier+"'\n" +
+            "AND quiz.password = MD5( '"+password+"' ) AND quiz.userId = "+id+"; ";
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            int deletedRows =  statement.executeUpdate();
+
+            if (deletedRows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

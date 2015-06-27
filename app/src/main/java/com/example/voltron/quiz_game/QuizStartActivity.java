@@ -116,4 +116,58 @@ public class QuizStartActivity extends ActionBarActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    public void deleteQuizAction(View v) {
+        EditText quizIdentifierField = (EditText) findViewById(R.id.quizIdentifier);
+        EditText passwordField = (EditText) findViewById(R.id.passwordtext);
+
+        final String quizIdentifier = quizIdentifierField.getText().toString();
+        final String password = passwordField.getText().toString();
+
+        final Db db = new Db();
+        class deleteQuiz extends AsyncTask<String, Void, Boolean> {
+            @Override
+            protected Boolean doInBackground(String... params) {
+                Boolean result = false;
+                if(db.init()){
+                    result = db.deleteQuiz(quizIdentifier, password, user.id);
+                }
+
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                if(result) {
+                    Toast.makeText(getBaseContext(),
+                            "Quiz is deleted!", Toast.LENGTH_LONG)
+                            .show();
+                    QuizStartActivity.this.startOptionsActivity();
+                }else{
+                    Toast.makeText(getBaseContext(),
+                            "Wrong quiz identifier or/and password or you are not allowed to delete this quiz!", Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+
+            @Override
+            protected void onPreExecute() {
+            }
+
+            @Override
+            protected void onProgressUpdate(Void... values) {
+            }
+        }
+
+        new deleteQuiz().execute("");
+    }
+
+    private void startOptionsActivity() {
+        Intent intent = new Intent(this, OptionsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+        intent.putExtras(bundle);
+        finish();
+        startActivity(intent);
+    }
 }

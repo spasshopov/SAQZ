@@ -390,8 +390,8 @@ public class QuizActivity extends ActionBarActivity {
 
                 try {
                     // Add your data
-                    Log.d("Sending mail 2 to: ", QuizActivity.this.quiz.creatorEmail);
-                    Log.d("Quiz taken from: ", QuizActivity.this.user.nickname);
+                   // Log.d("Sending mail 2 to: ", QuizActivity.this.quiz.creatorEmail);
+                    //Log.d("Quiz taken from: ", QuizActivity.this.user.nickname);
                     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                     nameValuePairs.add(new BasicNameValuePair("from", "SAQZ Sandbox <s.v.shopov@gmail.com>"));
                     nameValuePairs.add(new BasicNameValuePair("to", "Quiz Creator <"+QuizActivity.this.quiz.creatorEmail+">"));

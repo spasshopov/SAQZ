@@ -171,4 +171,10 @@ public class OptionsActivity extends ActionBarActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    public void logOutAction(View v) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        finish();
+        startActivity(intent);
+    }
 }
