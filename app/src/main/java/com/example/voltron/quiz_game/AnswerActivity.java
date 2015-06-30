@@ -50,6 +50,7 @@ public class AnswerActivity extends ActionBarActivity {
     private TextView countDownField;
     private int counterDots = 1;
     private CountDownTimer counter = null;
+    int timeLeft = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,6 +234,7 @@ public class AnswerActivity extends ActionBarActivity {
                     counterText = millisUntilFinished / 1000+" seconds remaining...";
                     counterDots = 1;
                 }
+                timeLeft = (int)millisUntilFinished / 1000;
                 countDownField.setText(counterText);
             }
 
@@ -323,7 +325,6 @@ public class AnswerActivity extends ActionBarActivity {
                 final Db db = new Db();
                 boolean result = false;
                 if(db.init()){
-                    Log.d("Online answering", "Answer online");
                     boolean correct = false;
                     try {
                         user.number_answered = user.number_answered+1;
@@ -573,5 +574,20 @@ public class AnswerActivity extends ActionBarActivity {
         intent.putExtras(bundle);
         finish();
         startActivity(intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+        if (counter != null) {
+            counter.cancel();
+        }
+
+        if (timeLeft > 20) {
+            finish();
+        } else {
+            answerQuestion.performClick();
+            finish();
+        }
     }
 }
